@@ -19,8 +19,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
-//builder.Services.AddHostedService<MqttService>();
-
+// builder.Services.AddHostedService<MqttService>();
 var app = builder.Build();
 
 app.UseCors("AllowAll");
@@ -29,10 +28,10 @@ app.UseRouting();
 
 app.UseStaticFiles();
 
-
 app.MapHub<ChatHub>("/chatHub");
 
-app.MapGet("/", async context => {
+app.MapGet("/", async context => 
+{
     
     context.Response.Redirect("/index.html");
 

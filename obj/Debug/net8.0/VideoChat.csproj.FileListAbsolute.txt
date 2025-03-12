@@ -45,3 +45,5 @@ C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\SIPSorceryMedia.Abstractions.dll
 C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\SIPSorceryMedia.Encoders.dll
 C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\SIPSorceryMedia.SDL2.dll
 C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\QuanDEV\VideoChat\obj\Debug\net8.0\VideoChat.sourcelink.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\M2Mqtt.Net.dll

@@ -4,6 +4,8 @@ using System.Text;
 using System.Text.Json;
 using VideoChat.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace VideoChat.Services
 {
@@ -31,14 +33,23 @@ namespace VideoChat.Services
                     { "User-Agent", "dart-sip-ua v0.2.2" }
                 }
             };
+
+        string brokerAddress = "videocall.vnpt.vn"; // Replace with actual MQTT broker
+        
+        int brokerPort = 1883;  // Use 8883 for TLS
+
+        
+     
+
             var options = new MqttClientOptionsBuilder()
                 .WithWebSocketServer("wss://vcc.vnpt.vn:4443/ws") // VNPT WebSocket URL
-                .WithCredentials("username", "password") // Replace with actual credentials if needed
+                .WithCredentials("username", "password")
+            // Replace with actual credentials if needed
                 .Build();
 
             _mqttClient.ConnectedAsync += async (e) =>
             {
-                _logger.LogInformation("MQTT Connected");
+                _logger.LogInformation("MQTT Connected");                
                 await _mqttClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic("UCC/VCall/callcenter").Build());
             };
 
@@ -75,7 +86,7 @@ namespace VideoChat.Services
                 .WithPayload(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(payload)))
                 .Build();
 
-            await _mqttClient.PublishAsync(message);
+            await _mqttClient.PublishAsync(message);            
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
