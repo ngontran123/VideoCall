@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNPT Video Call</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>VNPT Video Call</h1>
+    <div id="video-container">
+        <video id="localVideo" autoplay muted style="width: 300px;"></video>
+        <video id="remoteVideo" autoplay style="width: 300px;"></video>
+    </div>
+    <div>
+        <input type="text" id="hotline" placeholder="Nhập vào hotline cần gọi đi nào..." value="18001039">
+        <button onclick="startSipCall()">Start Call</button>
+    </div>
+    <p id="status"></p>
+    <script src="js/SIPml-api.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="js/call_service.js"></script>
+</body>
+</html>
