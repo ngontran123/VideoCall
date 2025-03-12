@@ -18,7 +18,7 @@ const localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");
 
 
-let status_value = document.getElementById("status");
+const status_value = document.getElementById("status");
 
 
 const endCallBtn = document.getElementById("endCallBtn");
@@ -32,8 +32,8 @@ const voiceBtn = document.getElementById("voiceBtn");
 
 let isCameraOn = true;
 
-let isVoiceOn = true;
 
+let isVoiceOn = true;
 
 
 function toggleCamera()
@@ -50,7 +50,6 @@ function toggleCamera()
     isCameraOn=!isCameraOn;
 
     videoTrack.enabled = isCameraOn; // Toggle local video track
-
 
     callSession.mute('video', !isCameraOn);
 
@@ -86,7 +85,7 @@ function toggleVoice()
     voiceBtn.innerHTML = isVoiceOn 
         ? '<i class="bi bi-mic-fill me-1"></i> Voice' 
         : '<i class="bi bi-mic-mute-fill me-1"></i> Voice';
-    status_value.textContent = `Voice ${isVoiceOn ? "on" : "off"}`;
+    status_value.textContent = `Voice ${isVoiceOn ? "on" : "off"}`;    
 }
 
 async function initializeSipClient() 
@@ -141,7 +140,8 @@ function onSipEventStack(e) {
     }
 }
 
-function initializeWebRTC(localVideoId, remoteVideoId) {
+function initializeWebRTC(localVideoId, remoteVideoId) 
+{
     signalRConnection = new signalR.HubConnectionBuilder()
         .withUrl("/chatHub")
         .build();
@@ -224,8 +224,9 @@ function onSipEventSession(e) {
             break;
     }
 }
-function startSipCall() {
-    const hotline = document.getElementById("hotline").value;
+function startSipCall() 
+{
+    const hotline = document.getElementById("hotline").value;    
     
     if (!hotline) {
         status_value.textContent = "Please enter a hotline.";
@@ -233,9 +234,11 @@ function startSipCall() {
     }
 
     status_value.textContent = `Calling ${hotline}...`;
-    callSession = sipStack.newSession("call-audio", {
-        video_local: document.getElementById("localVideo"),
-        video_remote: document.getElementById("remoteVideo"),
+
+    callSession = sipStack.newSession("call-audio", 
+    {
+        video_local: localVideo,
+        video_remote: remoteVideo,
         audio_remote: document.createElement("audio"),
         events_listener: 
         { 
