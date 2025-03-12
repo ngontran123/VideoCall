@@ -90,17 +90,19 @@ function toggleVoice()
 
 async function initializeSipClient() 
 {   
-    if (typeof SIPml === "undefined") {
+    if (typeof SIPml === "undefined") 
+    {
         status_value.textContent = "SIPml5 library not loaded!";
         console.error("SIPml5 is not defined. Check script loading.");
         return;
     }
 
     try {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
         localVideo.srcObject = localStream;
         status_value.textContent = "Camera preview enabled";
-    } catch (err) {
+    } catch (err) 
+    {
         status_value.textContent = "Failed to access camera: " + err.message;
         console.error(err);
         return;
@@ -115,7 +117,7 @@ async function initializeSipClient()
         display_name: "dfdf",
         websocket_proxy_url: "wss://vcc.vnpt.vn:4443/ws",
         enable_rtcweb_breaker: false,
-        events_listener: onSipEventStack,
+        events_listener: { events: "*", listener: onSipEventStack },        
         sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }]
     });
 
@@ -139,6 +141,8 @@ function onSipEventStack(e) {
             break;
     }
 }
+
+
 
 function initializeWebRTC(localVideoId, remoteVideoId) 
 {
@@ -196,7 +200,7 @@ async function startCall(hotline) {
     signalRConnection.invoke("InitiateCall", hotline); // Trigger backend logic
 }
 
-function onSipEventSession(e) {
+async function onSipEventSession(e) {
     switch (e.type) {
         case "connecting":
             status_value.textContent = "Call connecting...";
@@ -206,6 +210,8 @@ function onSipEventSession(e) {
             endCallBtn.disabled = false;
             cameraBtn.disabled = false;
             voiceBtn.disabled = false;
+            // var data_obj={status:'Connected',message:'Call is connected'};
+            // await postData('/create-call',data_obj);
             break;
         case "terminated": 
         status_value.textContent = "Call ended"; 
@@ -217,18 +223,23 @@ function onSipEventSession(e) {
             isCameraOn = true;
             isVoiceOn = true;
             callSession = null;
+            // var data_obj={status:'Disconnected',message:'Call is disconnected'};
+            // await postData('/create-call',data_obj);
             // Keep localStream active for preview after call ends
             break;
         case "i_ao_request":
             if (e.getSipResponseCode() === 180) status_value.textContent = "Ringing...";
+            break;
+        default:
+            alert(e.type);
             break;
     }
 }
 function startSipCall() 
 {
     const hotline = document.getElementById("hotline").value;    
-    
-    if (!hotline) {
+    if (!hotline) 
+    {
         status_value.textContent = "Please enter a hotline.";
         return;
     }
@@ -249,8 +260,10 @@ function startSipCall()
 
     callSession.call(hotline);
 
-    signalRConnection.invoke("InitiateCall", hotline)
-        .catch(err => console.error("SignalR error:", err));
+    alert("Call initiated");
+
+    // signalRConnection.invoke("InitiateCall", hotline)
+    //     .catch(err => console.error("SignalR error:", err));
 }
 
 function endCall() 
@@ -260,6 +273,14 @@ function endCall()
         endCallBtn.disabled = true;
         callSession = null;
     }
+}
+
+async function postData(entry_point,data)
+{
+  await axios.post(entry_point,data)
+  .then(response => {
+    alert(response.message);
+  })
 }
 
 // window.startVideoCall = (hotline) => {

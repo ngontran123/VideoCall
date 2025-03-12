@@ -38,7 +38,7 @@
                     <input type="text" id="hotline" class="form-control" placeholder="Enter hotline (e.g., 18001039)" value="18001039">
                 </div>
                 <div class="col-auto">
-                    <button onclick="startCall()" class="btn btn-success" id="startCallBtn">
+                    <button onclick="startSipCall()" class="btn btn-success" id="startCallBtn">
                         <i class="bi bi-telephone-fill me-1"></i> Start Call
                     </button>
                 </div>
@@ -68,6 +68,7 @@
     <!-- SIPml5 -->
     <script src="js/SIPml-api.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- SignalR -->
     <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.0/dist/browser/signalr.min.js"></script>
     <!-- Bootstrap JS (for potential future interactivity) -->
