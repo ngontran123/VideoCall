@@ -1,23 +1,23 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\css\\style.css",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\css\\style.css",
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\index.html",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\SIPml-api.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\SIPml-api.js",
       "PackagePath": "staticwebassets\\js\\SIPml-api.js"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call_service.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\call_service.js",
       "PackagePath": "staticwebassets\\js\\call_service.js"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\video.html",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\video.html",
       "PackagePath": "staticwebassets\\video.html"
     },
     {

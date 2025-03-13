@@ -44,6 +44,7 @@ function toggleCamera()
     if (!callSession) 
     {
         status_value.textContent = "No active call to toggle camera.";
+        
         return;
     }
 
@@ -63,6 +64,7 @@ function toggleCamera()
 
 function toggleVoice()
 {
+
     if(!callSession)
     {
         status_value.textContent = "No active call to toggle voice.";
@@ -97,8 +99,9 @@ async function initializeSipClient()
         return;
     }
 
-    try {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+    try 
+    {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         localVideo.srcObject = localStream;
         status_value.textContent = "Camera preview enabled";
     } catch (err) 
@@ -108,16 +111,33 @@ async function initializeSipClient()
         return;
     }
 
-    sipStack = new SIPml.Stack(
-    {
+    // sipStack = new SIPml.Stack(
+    // {
+    //     realm: "vcc.vnpt.vn",
+    //     impi: "ios-dfdf-3bea51c7-37f3-4b99-aae4-c800710e5f34",
+    //     impu: "sip:ios-dfdfd-3bea51c7-37f3-4b99-aae4-c800710e5f34@vcc.vnpt.vn:5060",
+    //     password: "ZVI9N1oEFWhDtCr1",
+    //     display_name: "dfdf",
+    //     websocket_proxy_url: "wss://vcc.vnpt.vn:4443/ws",
+    //     enable_rtcweb_breaker: false,
+    //     events_listener: { events: "*", listener: onSipEventStack },        
+    //     sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }]
+    // });
+    sipStack = new SIPml.Stack({
         realm: "vcc.vnpt.vn",
-        impi: "ios-dfdf-3bea51c7-37f3-4b99-aae4-c800710e5f34",
-        impu: "sip:ios-dfdfd-3bea51c7-37f3-4b99-aae4-c800710e5f34@vcc.vnpt.vn:5060",
-        password: "ZVI9N1oEFWhDtCr1",
-        display_name: "dfdf",
+        impi: "ios-vtttuyenlxn_agg-5927588f-66ca-43ea-bd87-f08e8b9565ad",
+        impu: "sip:ios-vtttuyenlxn_agg-5927588f-66ca-43ea-bd87-f08e8b9565ad@vcc.vnpt.vn:5060",
+        password: "4CN0Zqr0w21PjEBD",
+        display_name: "vtttuyen1_vtag",
         websocket_proxy_url: "wss://vcc.vnpt.vn:4443/ws",
+        outbound_proxy_url: null,
+        ice_servers: null,
         enable_rtcweb_breaker: false,
-        events_listener: { events: "*", listener: onSipEventStack },        
+        events_listener: { events: "*", listener: onSipEventStack },
+        enable_early_ims: true,
+        enable_media_stream_cache: false,
+        bandwidth: null,
+        video_size: null,
         sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }]
     });
 
@@ -161,8 +181,10 @@ function initializeWebRTC(localVideoId, remoteVideoId)
         })
         .catch(err => console.error("Media error:", err));
 
-    peerConnection.ontrack = (event) => {
+    peerConnection.ontrack = (event) => 
+    {
         document.getElementById(remoteVideoId).srcObject = event.streams[0];
+        
     };
 
     peerConnection.onicecandidate = (event) => {
@@ -238,9 +260,11 @@ async function onSipEventSession(e) {
 function startSipCall() 
 {
     const hotline = document.getElementById("hotline").value;    
-    if (!hotline) 
+    
+    if(!hotline) 
     {
         status_value.textContent = "Please enter a hotline.";
+        
         return;
     }
 
@@ -248,9 +272,9 @@ function startSipCall()
 
     callSession = sipStack.newSession("call-audio", 
     {
-        video_local: localVideo,
-        video_remote: remoteVideo,
-        audio_remote: document.createElement("audio"),
+        video_local:  document.getElementById("localVideo"),
+        video_remote: document.getElementById("remoteVideo"),
+        audio_remote: document.getElementById("remoteAudio"),
         events_listener: 
         { 
             events: "*", 
@@ -259,8 +283,6 @@ function startSipCall()
     });
 
     callSession.call(hotline);
-
-    alert("Call initiated");
 
     // signalRConnection.invoke("InitiateCall", hotline)
     //     .catch(err => console.error("SignalR error:", err));
