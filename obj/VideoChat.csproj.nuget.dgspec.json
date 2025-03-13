@@ -1,36 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\QuanDEV\\VideoChat\\VideoChat.csproj": {}
+    "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\VideoChat.csproj": {}
   },
   "projects": {
-    "C:\\Users\\QuanDEV\\VideoChat\\VideoChat.csproj": {
+    "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\VideoChat.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\QuanDEV\\VideoChat\\VideoChat.csproj",
+        "projectUniqueName": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\VideoChat.csproj",
         "projectName": "VideoChat",
-        "projectPath": "C:\\Users\\QuanDEV\\VideoChat\\VideoChat.csproj",
-        "packagesPath": "C:\\Users\\QuanDEV\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\QuanDEV\\VideoChat\\obj\\",
+        "projectPath": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\VideoChat.csproj",
+        "packagesPath": "C:\\Users\\Quan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages",
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\QuanDEV\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 21.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Quan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Users\\QuanDEV\\Downloads\\Telegram Desktop\\kimtool sdk\\New folder\\KimTools.SDK": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,6 +35,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -93,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

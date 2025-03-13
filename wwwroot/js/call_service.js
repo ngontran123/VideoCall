@@ -101,7 +101,7 @@ async function initializeSipClient()
 
     try 
     {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
         localVideo.srcObject = localStream;
         status_value.textContent = "Camera preview enabled";
     } catch (err) 
@@ -111,23 +111,11 @@ async function initializeSipClient()
         return;
     }
 
-    // sipStack = new SIPml.Stack(
-    // {
-    //     realm: "vcc.vnpt.vn",
-    //     impi: "ios-dfdf-3bea51c7-37f3-4b99-aae4-c800710e5f34",
-    //     impu: "sip:ios-dfdfd-3bea51c7-37f3-4b99-aae4-c800710e5f34@vcc.vnpt.vn:5060",
-    //     password: "ZVI9N1oEFWhDtCr1",
-    //     display_name: "dfdf",
-    //     websocket_proxy_url: "wss://vcc.vnpt.vn:4443/ws",
-    //     enable_rtcweb_breaker: false,
-    //     events_listener: { events: "*", listener: onSipEventStack },        
-    //     sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }]
-    // });
     sipStack = new SIPml.Stack({
         realm: "vcc.vnpt.vn",
-        impi: "ios-vtttuyenlxn_agg-5927588f-66ca-43ea-bd87-f08e8b9565ad",
-        impu: "sip:ios-vtttuyenlxn_agg-5927588f-66ca-43ea-bd87-f08e8b9565ad@vcc.vnpt.vn:5060",
-        password: "4CN0Zqr0w21PjEBD",
+        impi: "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458",
+        impu: "sip:ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458@vcc.vnpt.vn:5060",
+        password: "Anb07vl2YGy5BpQH",
         display_name: "vtttuyen1_vtag",
         websocket_proxy_url: "wss://vcc.vnpt.vn:4443/ws",
         outbound_proxy_url: null,
@@ -141,13 +129,32 @@ async function initializeSipClient()
         sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }]
     });
 
+    // sipStack = new SIPml.Stack({
+    //     realm: "vcc.vnpt.vn",
+    //     impi: "pAmb7pQRUAMiSEDk", // Using hashinfo as impi (assumption)
+    //     impu: "sip:pAmb7pQRUAMiSEDk@vcc.vnpt.vn:5060", // Constructed from hashinfo and domain
+    //     password: null, // Not provided in JSON; must be added if required
+    //     display_name: null, // Not provided; optional
+    //     websocket_proxy_url: "wss://vcc.vnpt.vn:4443/ws",
+    //     outbound_proxy_url: "", // Empty string as per sip_outboundproxy_url
+    //     ice_servers: [], // Empty array as per "[]"
+    //     enable_rtcweb_breaker: false,
+    //     events_listener: { events: "*", listener: onSipEventStack }, // Assumed for completeness
+    //     enable_early_ims: true, // Inverted from disable_early_ims: "false"
+    //     enable_media_stream_cache: false, // From enable_media_caching: "false"
+    //     bandwidth: null, // Empty string interpreted as null
+    //     video_size: null, // Empty string interpreted as null
+    //     sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }], // Carried over from prior context
+    //     enable_debug: true // Inverted from disable_debug: "false"
+    // });
+
     sipStack.start();
     
     status_value.textContent = "SIP client initialized here";
 
-    signalRConnection.start()
-        .then(() => console.log("SignalR Connected"))
-        .catch(err => status_value.textContent = `SignalR error: ${err.message}`);
+    // signalRConnection.start()
+    //     .then(() => console.log("SignalR Connected"))
+    //     .catch(err => status_value.textContent = `SignalR error: ${err.message}`);
 }
 
 function onSipEventStack(e) {
@@ -232,6 +239,8 @@ async function onSipEventSession(e) {
             endCallBtn.disabled = false;
             cameraBtn.disabled = false;
             voiceBtn.disabled = false;
+            document.getElementById("remoteVideo").srcObject = e.session.getRemoteStreams()[0];
+    document.getElementById("remoteAudio").srcObject = e.session.getRemoteStreams()[0];
             // var data_obj={status:'Connected',message:'Call is connected'};
             // await postData('/create-call',data_obj);
             break;
@@ -253,7 +262,6 @@ async function onSipEventSession(e) {
             if (e.getSipResponseCode() === 180) status_value.textContent = "Ringing...";
             break;
         default:
-            alert(e.type);
             break;
     }
 }
@@ -275,6 +283,8 @@ function startSipCall()
         video_local:  document.getElementById("localVideo"),
         video_remote: document.getElementById("remoteVideo"),
         audio_remote: document.getElementById("remoteAudio"),
+        bandwidth: { audio: null, video:null},
+        screencast_window_id: 0,
         events_listener: 
         { 
             events: "*", 
