@@ -50,7 +50,7 @@ function toggleCamera()
 
     isCameraOn=!isCameraOn;
 
-    videoTrack.enabled = isCameraOn; // Toggle local video track
+    videoTrack.enabled = isCameraOn;
 
     callSession.mute('video', !isCameraOn);
 
@@ -178,7 +178,7 @@ function initializeWebRTC(localVideoId, remoteVideoId)
         .build();
 
     peerConnection = new RTCPeerConnection({
-        iceServers: [{ urls: "stun:stun.l.google.com:19302" }] // Add TURN if needed
+        iceServers: [{ urls: "stun:stun.l.google.com:19302" }] 
     });
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -226,7 +226,7 @@ async function startCall(hotline) {
     const offer = await peerConnection.createOffer();
     await peerConnection.setLocalDescription(offer);
     signalRConnection.invoke("SendOffer", "vnpt-endpoint", JSON.stringify(offer));
-    signalRConnection.invoke("InitiateCall", hotline); // Trigger backend logic
+    signalRConnection.invoke("InitiateCall", hotline); 
 }
 
 async function onSipEventSession(e) {
