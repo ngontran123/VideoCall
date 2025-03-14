@@ -146,16 +146,16 @@ class MQTTClient {
     }
 
     onMessageArrived(message) {
-        console.log("onMessageArrived_original: " + message.payloadString);
+        //console.log("onMessageArrived_original: " + message.payloadString);
         var jsonRv = JSON.parse(atob(message.payloadString));
-        console.log("onMessageArrived " + JSON.stringify(jsonRv));
-        console.log("onMessageArrived " + jsonRv.signal + " - " + jsonRv.dest);
+        // console.log("onMessageArrived " + JSON.stringify(jsonRv));
+        //console.log("onMessageArrived " + jsonRv.signal + " - " + jsonRv.dest);
 
         const now = new Date();
         const timestampSec2 = Math.floor(now.getTime() / 1000);
         if(jsonRv.signal=='req_customer_info' && jsonRv.dest=='customer')
         {
-           console.log('send pong back');           
+          // console.log('send pong back');           
             const messageData = {
                 "dest": "callcenter",
                 "signal": "res_customer_info",
@@ -188,7 +188,7 @@ class MQTTClient {
          
          if(jsonRv.signal=='ping' && jsonRv.dest=='customer')
         {
-           console.log('send ping back');           
+           //console.log('send ping back');           
             setTimeout(() => {
                 this.sendMqtt({
                 "dest": "callcenter",
@@ -201,7 +201,7 @@ class MQTTClient {
          }
          if(jsonRv.signal=='pong' && jsonRv.dest=='customer')
         {
-           console.log('send pong back');           
+           //console.log('send pong back');           
             setTimeout(() => {
                 this.sendMqtt({
                 "dest": "callcenter",

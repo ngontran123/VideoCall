@@ -77,6 +77,7 @@ const mqttClient = new MQTTClient();
 function toggleCamera()
 {
     const videoTrack = localStream.getVideoTracks()[0];
+
     if (!videoTrack) return;
 
     if (!callSession) 
@@ -137,7 +138,7 @@ async function initializeSipClient()
 
     try 
     {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         localVideo.srcObject = localStream;
         status_value.textContent = "Camera preview enabled";
     } catch (err) 
@@ -320,10 +321,6 @@ async function onSipEventSession(e)
             endCallBtn.disabled = false;
             cameraBtn.disabled = false;
             voiceBtn.disabled = false;
-    //         document.getElementById("remoteVideo").srcObject = e.session.getRemoteStreams()[0];
-    // document.getElementById("remoteAudio").srcObject = e.session.getRemoteStreams()[0];
-            // var data_obj={status:'Connected',message:'Call is connected'};
-            // await postData('/create-call',data_obj);
             break;
         case "terminated": 
         status_value.textContent = "Call ended"; 
@@ -335,9 +332,6 @@ async function onSipEventSession(e)
             isCameraOn = true;
             isVoiceOn = true;
             callSession = null;
-            // var data_obj={status:'Disconnected',message:'Call is disconnected'};
-            // await postData('/create-call',data_obj);
-            // Keep localStream active for preview after call ends
             break;
         case "i_ao_request":
             if (e.getSipResponseCode() === 180) status_value.textContent = "Ringing...";

@@ -9,7 +9,8 @@
       "VideoChat/1.0.0": {
         "dependencies": {
           "M2Mqtt": "4.3.0",
-          "MQTTnet": "4.3.7.1207",
+          "MQTTnet": "5.0.1.1416",
+          "MQTTNet.Client": "2.0.1",
           "Microsoft.AspNetCore.SignalR": "1.2.0",
           "SIPSorcery": "8.0.10",
           "SIPSorceryMedia.Encoders": "8.0.7",
@@ -69,7 +70,7 @@
       "Microsoft.AspNetCore.Connections.Abstractions/2.3.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Http.Features": "2.3.0",
-          "System.IO.Pipelines": "8.0.0"
+          "System.IO.Pipelines": "9.0.0"
         }
       },
       "Microsoft.AspNetCore.Hosting.Abstractions/2.3.0": {
@@ -97,7 +98,7 @@
       "Microsoft.AspNetCore.Http.Abstractions/2.3.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Http.Features": "2.3.0",
-          "System.Text.Encodings.Web": "8.0.0"
+          "System.Text.Encodings.Web": "9.0.0"
         }
       },
       "Microsoft.AspNetCore.Http.Connections/1.2.0": {
@@ -117,7 +118,7 @@
           "Microsoft.AspNetCore.Connections.Abstractions": "2.3.0",
           "Newtonsoft.Json": "11.0.2",
           "System.Buffers": "4.6.0",
-          "System.IO.Pipelines": "8.0.0"
+          "System.IO.Pipelines": "9.0.0"
         }
       },
       "Microsoft.AspNetCore.Http.Extensions/2.3.0": {
@@ -152,7 +153,7 @@
           "Microsoft.AspNetCore.Http.Connections": "1.2.0",
           "Microsoft.AspNetCore.SignalR.Core": "1.2.0",
           "Microsoft.AspNetCore.WebSockets": "2.3.0",
-          "System.IO.Pipelines": "8.0.0"
+          "System.IO.Pipelines": "9.0.0"
         }
       },
       "Microsoft.AspNetCore.SignalR.Common/1.2.0": {
@@ -170,7 +171,7 @@
           "Microsoft.AspNetCore.SignalR.Protocols.Json": "1.2.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
-          "System.IO.Pipelines": "8.0.0",
+          "System.IO.Pipelines": "9.0.0",
           "System.Reflection.Emit": "4.7.0",
           "System.Threading.Channels": "8.0.0"
         }
@@ -179,7 +180,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.SignalR.Common": "1.2.0",
           "Newtonsoft.Json": "11.0.2",
-          "System.IO.Pipelines": "8.0.0"
+          "System.IO.Pipelines": "9.0.0"
         }
       },
       "Microsoft.AspNetCore.WebSockets/2.3.0": {
@@ -192,7 +193,7 @@
       "Microsoft.AspNetCore.WebUtilities/2.3.0": {
         "dependencies": {
           "Microsoft.Net.Http.Headers": "2.3.0",
-          "System.Text.Encodings.Web": "8.0.0"
+          "System.Text.Encodings.Web": "9.0.0"
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
@@ -288,11 +289,23 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "MQTTnet/4.3.7.1207": {
+      "MQTTnet/5.0.1.1416": {
         "runtime": {
-          "lib/net7.0/MQTTnet.dll": {
-            "assemblyVersion": "4.3.7.1207",
-            "fileVersion": "4.3.7.1207"
+          "lib/net8.0/MQTTnet.dll": {
+            "assemblyVersion": "5.0.1.1416",
+            "fileVersion": "5.0.1.1416"
+          }
+        }
+      },
+      "MQTTNet.Client/2.0.1": {
+        "dependencies": {
+          "MQTTnet": "5.0.1.1416",
+          "System.Text.Json": "9.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/MQTTNet.Client.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
           }
         }
       },
@@ -513,7 +526,14 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "System.IO.Pipelines/8.0.0": {},
+      "System.IO.Pipelines/9.0.0": {
+        "runtime": {
+          "lib/net8.0/System.IO.Pipelines.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.52809"
+          }
+        }
+      },
       "System.Linq/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -883,7 +903,34 @@
           "System.Text.Encoding": "4.3.0"
         }
       },
-      "System.Text.Encodings.Web/8.0.0": {},
+      "System.Text.Encodings.Web/9.0.0": {
+        "runtime": {
+          "lib/net8.0/System.Text.Encodings.Web.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.52809"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll": {
+            "rid": "browser",
+            "assetType": "runtime",
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.52809"
+          }
+        }
+      },
+      "System.Text.Json/9.0.0": {
+        "dependencies": {
+          "System.IO.Pipelines": "9.0.0",
+          "System.Text.Encodings.Web": "9.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/System.Text.Json.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.52809"
+          }
+        }
+      },
       "System.Threading/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0",
@@ -1171,12 +1218,19 @@
       "path": "microsoft.win32.primitives/4.3.0",
       "hashPath": "microsoft.win32.primitives.4.3.0.nupkg.sha512"
     },
-    "MQTTnet/4.3.7.1207": {
+    "MQTTnet/5.0.1.1416": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ah7aHXoedWp5m5a4zy2u4phOEVj0QFYzOb5tFKQeV8RRBrxp+1QREF4ymZuG8D+hzB2dhtrrG81WxTFv0PzOeQ==",
-      "path": "mqttnet/4.3.7.1207",
-      "hashPath": "mqttnet.4.3.7.1207.nupkg.sha512"
+      "sha512": "sha512-ONYieEMaHiIei5dAtHXywnfJGhmrd5Av5sNJSQERp6AtZdPk3xxjCR6Cv0C5RUr/XbLeHO4/HQ0Rc2bQ5NF5Mw==",
+      "path": "mqttnet/5.0.1.1416",
+      "hashPath": "mqttnet.5.0.1.1416.nupkg.sha512"
+    },
+    "MQTTNet.Client/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NpVbbtQ1WsjZx+9KZ89kko22icrCNdNOHtGmvJmWf3CdZJ0lT3V9M+GJYLSBzbClFRtp2ka/lOd/Riwyb1PHwQ==",
+      "path": "mqttnet.client/2.0.1",
+      "hashPath": "mqttnet.client.2.0.1.nupkg.sha512"
     },
     "Newtonsoft.Json/11.0.2": {
       "type": "package",
@@ -1423,12 +1477,12 @@
       "path": "system.io.filesystem.primitives/4.3.0",
       "hashPath": "system.io.filesystem.primitives.4.3.0.nupkg.sha512"
     },
-    "System.IO.Pipelines/8.0.0": {
+    "System.IO.Pipelines/9.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-FHNOatmUq0sqJOkTx+UF/9YK1f180cnW5FVqnQMvYUN0elp6wFzbtPSiqbo1/ru8ICp43JM1i7kKkk6GsNGHlA==",
-      "path": "system.io.pipelines/8.0.0",
-      "hashPath": "system.io.pipelines.8.0.0.nupkg.sha512"
+      "sha512": "sha512-eA3cinogwaNB4jdjQHOP3Z3EuyiDII7MT35jgtnsA4vkn0LUrrSHsU0nzHTzFzmaFYeKV7MYyMxOocFzsBHpTw==",
+      "path": "system.io.pipelines/9.0.0",
+      "hashPath": "system.io.pipelines.9.0.0.nupkg.sha512"
     },
     "System.Linq/4.3.0": {
       "type": "package",
@@ -1654,12 +1708,19 @@
       "path": "system.text.encoding.extensions/4.3.0",
       "hashPath": "system.text.encoding.extensions.4.3.0.nupkg.sha512"
     },
-    "System.Text.Encodings.Web/8.0.0": {
+    "System.Text.Encodings.Web/9.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ==",
-      "path": "system.text.encodings.web/8.0.0",
-      "hashPath": "system.text.encodings.web.8.0.0.nupkg.sha512"
+      "sha512": "sha512-e2hMgAErLbKyUUwt18qSBf9T5Y+SFAL3ZedM8fLupkVj8Rj2PZ9oxQ37XX2LF8fTO1wNIxvKpihD7Of7D/NxZw==",
+      "path": "system.text.encodings.web/9.0.0",
+      "hashPath": "system.text.encodings.web.9.0.0.nupkg.sha512"
+    },
+    "System.Text.Json/9.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-js7+qAu/9mQvnhA4EfGMZNEzXtJCDxgkgj8ohuxq/Qxv+R56G+ljefhiJHOxTNiw54q8vmABCWUwkMulNdlZ4A==",
+      "path": "system.text.json/9.0.0",
+      "hashPath": "system.text.json.9.0.0.nupkg.sha512"
     },
     "System.Threading/4.3.0": {
       "type": "package",

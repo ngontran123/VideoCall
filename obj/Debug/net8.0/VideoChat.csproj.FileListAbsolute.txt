@@ -96,3 +96,8 @@ C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Debug\net8.0\refint\VideoChat.dl
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Debug\net8.0\VideoChat.pdb
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Debug\net8.0\VideoChat.genruntimeconfig.cache
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Debug\net8.0\ref\VideoChat.dll
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\MQTTNet.Client.dll
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\System.IO.Pipelines.dll
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\System.Text.Json.dll
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
