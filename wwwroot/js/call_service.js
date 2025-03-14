@@ -149,6 +149,10 @@ async function initializeSipClient()
     //     return;
     // }
 
+   await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then(stream => console.log("Permissions granted"))
+    .catch(error => console.error("Permission denied:", error));
+
 
     mqttClient.connect();
 
@@ -270,8 +274,10 @@ function initializeWebRTC(localVideoId, remoteVideoId)
         
     };
 
-    peerConnection.onicecandidate = (event) => {
-        if (event.candidate) {
+    peerConnection.onicecandidate = (event) => 
+    {
+        if (event.candidate) 
+        {
             signalRConnection.invoke("SendIceCandidate", "vnpt-endpoint", JSON.stringify(event.candidate));
         }
     };
@@ -339,6 +345,7 @@ async function onSipEventSession(e)
             if (e.getSipResponseCode() === 180) status_value.textContent = "Ringing...";
             break;
         default:
+            console.log("Other Stream event:",e.type);
             break;
     }
 }
@@ -354,19 +361,23 @@ function startSipCall()
     }
 
     status_value.textContent = `Calling ${hotline}...`;
+     
+    localVideo.muted = true;
 
     callSession = sipStack.newSession("call-audio", 
-    {
-        video_local:  document.getElementById("localVideo"),
-        video_remote: document.getElementById("remoteVideo"),
+    {   
+        video_local:  localVideo,
+        video_remote: remoteVideo,
         audio_remote: document.getElementById("remoteAudio"),
         bandwidth: { audio: null, video:null},
+        video_size:{minWidth:640,minHeight:480,maxWidth:1280,maxHeight:720},
         screencast_window_id: 0,
         events_listener: 
         { 
             events: "*", 
             listener:onSipEventSession
-        }
+        },
+        sip_caps:[{name:"+g.oma.sip-im"},{name:"language",value:"'en,fr'"}]
     });
 
     callSession.call(hotline);

@@ -71,6 +71,34 @@ class MQTTClient {
         }
     }
 
+    base64Data(e) {
+            return btoa(encodeURIComponent(e).replace(/%([0-9A-F]{2})/g, (function (e, t) {
+                return String.fromCharCode(parseInt(t, 16))
+            })))
+        }
+
+
+    sendMqtt(e) {
+        console.error("MQTT cliet start send Message");
+        if (!this.client.isConnected()) {
+            console.error("MQTT client is not connected");
+            return;
+        }
+        let i = (new Date).getTime();
+        i = Math.floor(i / 1e3);
+        const s = {
+            ...e,
+            time: i
+        }
+        const a = JSON.stringify(s)
+        const n = new Paho.MQTT.Message(this.base64Data(a));
+        console.log(n);
+        n.destinationName = "UCC/VCall/ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458";
+        n.qos = 0;
+        this.client.send(n)
+         console.error("MQTT client end send Message ");
+    }
+
     sendMessage(data, sipmlData) {
         if (!this.client.isConnected()) {
             console.error("MQTT client is not connected");
@@ -87,11 +115,12 @@ class MQTTClient {
 
             console.log("Message data:", messageData);
 
-            // Convert to JSON string and encode
             const jsonString = JSON.stringify(messageData);
-            const encodedData = base64Data(jsonString); // Assuming base64Data is defined elsewhere
+            
+            const encodedData = base64Data(jsonString); 
 
-            if (!encodedData) {
+            if (!encodedData)
+            {
                 console.log("Failed to encode message data");
                 throw new Error("Failed to encode message data");
             }
@@ -117,39 +146,71 @@ class MQTTClient {
     }
 
     onMessageArrived(message) {
+        console.log("onMessageArrived_original: " + message.payloadString);
         var jsonRv = JSON.parse(atob(message.payloadString));
         console.log("onMessageArrived " + JSON.stringify(jsonRv));
-        if(jsonRv.signal=='res_customer_info' && jsonRv.dest=='customer')
+        console.log("onMessageArrived " + jsonRv.signal + " - " + jsonRv.dest);
+
+        const now = new Date();
+        const timestampSec2 = Math.floor(now.getTime() / 1000);
+        if(jsonRv.signal=='req_customer_info' && jsonRv.dest=='customer')
         {
-           console.log('send pong back');
-           
-const j = 
-{
-    sipml: {
-        impi: "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458" // Replace with your actual SIP identifier
-    }
-};  
-const now = new Date();
-const timestampSec2 = Math.floor(now.getTime() / 1000);
-    const messageData = {
-        "dest": "callcenter",
-        "signal": "res_customer_info",
-        "type_call": "video",
-        "time": timestampSec2,
-        "data": {
-            "name": "0919262555",
-            "call_id": "ios-dfdf-3bea51c7-37f3-4b99-aae4-c800710e5f34-1729160226000",
-            "sip_call_id": "092805fa-0f34-4067-af8b-bc8291613260",
-            "data_options": {
-                "msisdn": "0919262555",
-                "request_id": "dfaa71cb-6bd0-4449-acc5-306359fb1194"
-            }
-        }
-    };
-
-    this.sendMessage(messageData, j);
-
- }
-
-    }
+           console.log('send pong back');           
+            const messageData = {
+                "dest": "callcenter",
+                "signal": "res_customer_info",
+                "type_call": "video",
+                "time": timestampSec2,
+                "data": {
+                    "name": "0916688623",
+                    "call_id": "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458",
+                    "sip_call_id": "092805fa-0f34-4067-af8b-bc8291613260",
+                    "data_options": {
+                        "msisdn": "0916688623",
+                        "request_id": "846f925f-9079-4ee7-9f59-b922162457d1"
+                    }
+                }
+            };
+            this.sendMqtt(messageData);
+                console.log('start before timeout');   
+            setTimeout(() => {
+                console.log('process before ping');   
+            this.sendMqtt({
+                "dest": "callcenter",
+                "signal": "ping",
+                "type_call": "video",
+                "time": Math.floor((new Date()).getTime() / 1000),
+                "data": {}
+                });
+            },3000)
+                    
+         }
+         
+         if(jsonRv.signal=='ping' && jsonRv.dest=='customer')
+        {
+           console.log('send ping back');           
+            setTimeout(() => {
+                this.sendMqtt({
+                "dest": "callcenter",
+                "signal": "pong",
+                "type_call": "video",
+                "time": Math.floor((new Date()).getTime() / 1000),
+                "data": {}
+                });
+            },2000)
+         }
+         if(jsonRv.signal=='pong' && jsonRv.dest=='customer')
+        {
+           console.log('send pong back');           
+            setTimeout(() => {
+                this.sendMqtt({
+                "dest": "callcenter",
+                "signal": "ping",
+                "type_call": "video",
+                "time": Math.floor((new Date()).getTime() / 1000),
+                "data": {}
+                });
+            },2000)
+         }
+   }
 }
