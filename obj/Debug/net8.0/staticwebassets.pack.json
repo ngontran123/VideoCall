@@ -17,6 +17,14 @@
       "PackagePath": "staticwebassets\\js\\call_service.js"
     },
     {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\mqtt.js",
+      "PackagePath": "staticwebassets\\js\\mqtt.js"
+    },
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\paho-mqtt.js",
+      "PackagePath": "staticwebassets\\js\\paho-mqtt.js"
+    },
+    {
       "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\video.html",
       "PackagePath": "staticwebassets\\video.html"
     },

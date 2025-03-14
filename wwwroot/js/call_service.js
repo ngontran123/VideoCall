@@ -1,9 +1,44 @@
 
+
 let peerConnection;
 
 const signalRConnection = new signalR.HubConnectionBuilder()
 .withUrl("/chatHub")
 .build();
+
+
+
+function getMessageData()
+{
+
+    const now = new Date();
+const timestampSec2 = Math.floor(now.getTime() / 1000);
+    const messageData = {
+        "dest": "callcenter",
+        "signal": "res_customer_info",
+        "type_call": "video",
+        "time": timestampSec2,
+        "data": {
+            "name": "0919262555",
+            "call_id": "ios-dfdf-3bea51c7-37f3-4b99-aae4-c800710e5f34-1729160226000",
+            "sip_call_id": "092805fa-0f34-4067-af8b-bc8291613260",
+            "data_options": {
+                "msisdn": "0919262555",
+                "request_id": "dfaa71cb-6bd0-4449-acc5-306359fb1194"
+            }
+        }
+    };
+
+    return messageData;
+}
+
+
+const j = {
+    sipml: {
+        impi: "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458" // Replace with your actual SIP identifier
+    }
+};
+
 
 
 let sipStack;
@@ -34,6 +69,9 @@ let isCameraOn = true;
 
 
 let isVoiceOn = true;
+
+const mqttClient = new MQTTClient();
+
 
 
 function toggleCamera()
@@ -99,17 +137,55 @@ async function initializeSipClient()
         return;
     }
 
-    try 
-    {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
-        localVideo.srcObject = localStream;
-        status_value.textContent = "Camera preview enabled";
-    } catch (err) 
-    {
-        status_value.textContent = "Failed to access camera: " + err.message;
-        console.error(err);
-        return;
-    }
+    // try 
+    // {
+    //     localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+    //     localVideo.srcObject = localStream;
+    //     status_value.textContent = "Camera preview enabled";
+    // } catch (err) 
+    // {
+    //     status_value.textContent = "Failed to access camera: " + err.message;
+    //     console.error(err);
+    //     return;
+    // }
+
+
+    mqttClient.connect();
+
+
+   setTimeout(()=>{
+    mqttClient.subscribe("UCC/VCall/ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458");
+
+    // mqttClient.sendMessage("data",j);
+
+},2000);
+
+
+
+// mqttClient.setMessageCallback((message) => {
+//     console.log('Received message:', message);
+//     console.log('Topic:', message.topic);
+//     console.log('Data:', message.data);
+//     const now = new Date();
+// const timestampSec2 = Math.floor(now.getTime() / 1000);
+//     const messageData = {
+//         "dest": "callcenter",
+//         "signal": "ping/pong",
+//         "type_call": "video",
+//         "time": timestampSec2,
+//         "data": {
+//             "name": "0919262555",
+//             "call_id": "ios-dfdf-3bea51c7-37f3-4b99-aae4-c800710e5f34-1729160226000",
+//             "sip_call_id": "092805fa-0f34-4067-af8b-bc8291613260",
+//             "data_options": {
+//                 "msisdn": "0919262555",
+//                 "request_id": "dfaa71cb-6bd0-4449-acc5-306359fb1194"
+//             }
+//         }
+//     };
+
+//     const encodedResult = mqttClient.sendMessage(messageData, j);
+//     });
 
     sipStack = new SIPml.Stack({
         realm: "vcc.vnpt.vn",
@@ -229,7 +305,8 @@ async function startCall(hotline) {
     signalRConnection.invoke("InitiateCall", hotline); 
 }
 
-async function onSipEventSession(e) {
+async function onSipEventSession(e) 
+{
     switch (e.type) {
         case "connecting":
             status_value.textContent = "Call connecting...";
@@ -239,8 +316,8 @@ async function onSipEventSession(e) {
             endCallBtn.disabled = false;
             cameraBtn.disabled = false;
             voiceBtn.disabled = false;
-            document.getElementById("remoteVideo").srcObject = e.session.getRemoteStreams()[0];
-    document.getElementById("remoteAudio").srcObject = e.session.getRemoteStreams()[0];
+    //         document.getElementById("remoteVideo").srcObject = e.session.getRemoteStreams()[0];
+    // document.getElementById("remoteAudio").srcObject = e.session.getRemoteStreams()[0];
             // var data_obj={status:'Connected',message:'Call is connected'};
             // await postData('/create-call',data_obj);
             break;
@@ -293,6 +370,13 @@ function startSipCall()
     });
 
     callSession.call(hotline);
+
+    
+    // const encodedResult = mqttClient.sendMessage(getMessageData(), j);
+    // if (encodedResult) {
+    //     console.log("Encoded data sent:", encodedResult);
+    // }
+    
 
     // signalRConnection.invoke("InitiateCall", hotline)
     //     .catch(err => console.error("SignalR error:", err));
