@@ -1,5 +1,4 @@
 using VideoChat.Hubs;
-using VideoChat.Services;
 using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
