@@ -108,7 +108,7 @@ function toggleVoice()
         return;
     }
 
-    const audioTrack = localStream.getAudioTracks()[0];
+    const audioTrack = localStream.getAudioTracks()[0];    
 
     if(!audioTrack) return;
 
@@ -116,13 +116,14 @@ function toggleVoice()
 
     audioTrack.enabled=isVoiceOn;
 
-
     voiceBtn.classList.toggle("off", !isVoiceOn);
 
     voiceBtn.innerHTML = isVoiceOn 
         ? '<i class="bi bi-mic-fill me-1"></i> Voice' 
         : '<i class="bi bi-mic-mute-fill me-1"></i> Voice';
+
     status_value.textContent = `Voice ${isVoiceOn ? "on" : "off"}`;    
+
 }
 
 async function initializeSipClient() 
@@ -360,7 +361,8 @@ async function onSipEventSession(e)
 }
 function startSipCall() 
 {
-    const hotline = document.getElementById("hotline").value;    
+    const hotline = document.getElementById("hotline").value;
+    
     
     if(!hotline) 
     {
