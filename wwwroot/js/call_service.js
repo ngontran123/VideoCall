@@ -90,8 +90,6 @@ function toggleCamera()
 
     videoTrack.enabled = isCameraOn;
 
-    callSession.mute('video', !isCameraOn);
-
     cameraBtn.classList.toggle('off',!isCameraOn);
 
     cameraBtn.innerHTML = isCameraOn 
@@ -118,7 +116,6 @@ function toggleVoice()
 
     audioTrack.enabled=isVoiceOn;
 
-    callSession.mute('audio',!isVoiceOn);    
 
     voiceBtn.classList.toggle("off", !isVoiceOn);
 
@@ -137,17 +134,17 @@ async function initializeSipClient()
         return;
     }
 
-    // try 
-    // {
-    //     localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
-    //     localVideo.srcObject = localStream;
-    //     status_value.textContent = "Camera preview enabled";
-    // } catch (err) 
-    // {
-    //     status_value.textContent = "Failed to access camera: " + err.message;
-    //     console.error(err);
-    //     return;
-    // }
+    try 
+    {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+        localVideo.srcObject = localStream;
+        status_value.textContent = "Camera preview enabled";
+    } catch (err) 
+    {
+        status_value.textContent = "Failed to access camera: " + err.message;
+        console.error(err);
+        return;
+    }
 
    await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then(stream => console.log("Permissions granted"))
@@ -368,7 +365,6 @@ function startSipCall()
     if(!hotline) 
     {
         status_value.textContent = "Please enter a hotline.";
-        
         return;
     }
 
