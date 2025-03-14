@@ -344,8 +344,20 @@ async function onSipEventSession(e)
         case "i_ao_request":
             if (e.getSipResponseCode() === 180) status_value.textContent = "Ringing...";
             break;
+        case "m_stream_video_local_added":
+            console.log("Local Stream Added");
+            break;
+        case "m_stream_video_remote_added":
+            console.log("Remote Stream Added");
+            break;
+        case "m_stream_audio_local_added":
+            console.log("Local Audio Stream Added");
+            break;
+        case "m_stream_audio_remote_added":
+            console.log("Remote Audio Stream Added");
+            break;
         default:
-            console.log("Other Stream event:",e.type);
+            console.log("Other Stream Event:",e.type);
             break;
     }
 }
@@ -362,7 +374,7 @@ function startSipCall()
 
     status_value.textContent = `Calling ${hotline}...`;
      
-    localVideo.muted = true;
+    localVideo.muted = true;    
 
     callSession = sipStack.newSession("call-audio", 
     {   
@@ -382,7 +394,6 @@ function startSipCall()
 
     callSession.call(hotline);
 
-    
     // const encodedResult = mqttClient.sendMessage(getMessageData(), j);
     // if (encodedResult) {
     //     console.log("Encoded data sent:", encodedResult);
