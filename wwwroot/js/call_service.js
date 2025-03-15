@@ -24,7 +24,7 @@ const timestampSec2 = Math.floor(now.getTime() / 1000);
             "sip_call_id": "092805fa-0f34-4067-af8b-bc8291613260",
             "data_options": {
                 "msisdn": "0919262555",
-                "request_id": "dfaa71cb-6bd0-4449-acc5-306359fb1194"
+                "request_id": "dfaa71cb-6bd0-4449-accfe448-306359fb1194"
             }
         }
     };
@@ -315,12 +315,21 @@ async function onSipEventSession(e)
     switch (e.type) {
         case "connecting":
             status_value.textContent = "Call connecting...";
+            endCallBtn.disabled = false;
             break;
         case "connected": 
         status_value.textContent = "Call connected!"; 
             endCallBtn.disabled = false;
             cameraBtn.disabled = false;
             voiceBtn.disabled = false;
+            console.log("Local Video Tracks:", localVideo.srcObject?.getVideoTracks());
+
+            console.log("Remote Video Tracks:", remoteVideo.srcObject?.getVideoTracks());
+
+            console.log("Remote Audio Tracks:", remoteVideo.srcObject?.getAudioTracks());
+
+            // console.log("Local Audio Tracks:", document.getElementById("remoteAudio").srcObject?.getAudioTracks());
+
             break;
         case "terminated": 
         status_value.textContent = "Call ended"; 
@@ -346,7 +355,29 @@ async function onSipEventSession(e)
             console.log("Local Audio Stream Added");
             break;
         case "m_stream_audio_remote_added":
-            console.log("Remote Audio Stream Added");
+            // console.log("Remote media tracks:", callSession.oSipSessionCall.getRemoteStreams());
+            console.log("Remote audio added:", e);
+            // console.log("Remote audio stream added:", e.stream);
+
+            const remoteAudioElement = document.getElementById("remoteAudio");
+console.log("Remote Audio Element:", remoteAudioElement);
+console.log("Assigned Stream:", remoteAudioElement ? remoteAudioElement.srcObject : "No srcObject assigned");
+console.log("here");
+console.log("event value",e);
+if(e.session)
+    {
+      console.log("there is session",e.session);
+
+    }
+    if(!remoteAudioElement.srcObject)
+    {
+        console.log("No srcObject assigned");
+    }
+    else{
+        console.log("srcObject assigned");
+        remoteAudio.play().catch(err => console.error("Failed to play audio:", err));
+    }
+      // Attempt to get remote streams from WebRTC PeerConnection
             break;
         default:
             console.log("Other Stream Event:",e.type);
@@ -370,10 +401,10 @@ function startSipCall()
 
     callSession = sipStack.newSession("call-audio", 
     {   
-        video_local:  localVideo,
-        video_remote: remoteVideo,
+        video_local:  document.getElementById("localVideo"),
+        video_remote: document.getElementById("remoteVideo"),
         audio_remote: document.getElementById("remoteAudio"),
-        bandwidth: { audio: null, video:null},
+        bandwidth: {  audio: 50, video: 256},
         video_size:{minWidth:640,minHeight:480,maxWidth:1280,maxHeight:720},
         screencast_window_id: 0,
         events_listener: 
@@ -384,7 +415,14 @@ function startSipCall()
         sip_caps:[{name:"+g.oma.sip-im"},{name:"language",value:"'en,fr'"}]
     });
 
-    callSession.call(hotline);
+
+    navigator.mediaDevices.getUserMedia({
+        video: { width: 1280, height: 720 }, 
+        audio: true
+    }).then(stream => {
+        localVideo.srcObject = stream;
+        callSession.call(hotline);
+    }).catch(error => console.error("Error getting media:", error));
 
     // const encodedResult = mqttClient.sendMessage(getMessageData(), j);
     // if (encodedResult) {
