@@ -1,4 +1,4 @@
-
+import SIPml from '../node_modules/ecmascript-webrtc-sipml/SIPml.min.js';
 
 let peerConnection;
 
@@ -11,7 +11,8 @@ const signalRConnection = new signalR.HubConnectionBuilder()
 function getMessageData()
 {
 
-    const now = new Date();
+const now = new Date();
+
 const timestampSec2 = Math.floor(now.getTime() / 1000);
     const messageData = {
         "dest": "callcenter",
@@ -29,7 +30,7 @@ const timestampSec2 = Math.floor(now.getTime() / 1000);
         }
     };
 
-    return messageData;
+    return messageData;    
 }
 
 
@@ -71,7 +72,6 @@ let isCameraOn = true;
 let isVoiceOn = true;
 
 const mqttClient = new MQTTClient();
-
 
 
 function toggleCamera()
@@ -141,11 +141,12 @@ async function initializeSipClient()
         localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         localVideo.srcObject = localStream;
         status_value.textContent = "Camera preview enabled";
-    } catch (err) 
+    } 
+    catch (err) 
     {
         status_value.textContent = "Failed to access camera: " + err.message;
-        console.error(err);
-        return;
+        console.error(err);        
+        return;        
     }
 
    await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -157,8 +158,8 @@ async function initializeSipClient()
 
 
    setTimeout(()=>{
-    mqttClient.subscribe("UCC/VCall/ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458");
 
+    mqttClient.subscribe("UCC/VCall/ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458");
     // mqttClient.sendMessage("data",j);
 
 },2000);
@@ -455,8 +456,19 @@ async function postData(entry_point,data)
 //     startCall(hotline);
 // };
 
-window.onload=()=>{
-    initializeSipClient();};
+// window.onload=()=>{
+//     initializeSipClient();};
+
+// window.startSipCall = startSipCall;
+
+// window.endCall=endCall;
+
+export {initializeSipClient, startSipCall, endCall,toggleCamera,toggleVoice};
+
+// window.toggleCamera=toggleCamera;
+
+// window.toggleVoice=toggleVoice;
+
 
 // window.initializeWebRTC = () => initializeSipClient();
 

@@ -12,7 +12,8 @@ function base64Data(data) {
 }
 class MQTTClient {
     constructor() {
-        this.client = new Paho.MQTT.Client(
+        this.client = new Paho.MQTT.Client
+        (
             "videocall.vnpt.vn",
             Number("8081"),
             "" + Math.random().toString(20).substring(2, 8)

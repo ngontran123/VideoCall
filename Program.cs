@@ -27,6 +27,8 @@ app.UseRouting();
 
 app.UseStaticFiles();
 
+
+
 app.MapHub<ChatHub>("/chatHub");
 
 app.MapGet("/", async context => 
