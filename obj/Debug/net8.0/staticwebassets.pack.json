@@ -1,40 +1,40 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\css\\style.css",
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\css\\style.css",
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\index.html",
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\google_sofiatube7.mp3",
+      "PackagePath": "staticwebassets\\google_sofiatube7.mp3"
+    },
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\SIPml-api.js",
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\SIPml-api.js",
       "PackagePath": "staticwebassets\\js\\SIPml-api.js"
     },
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\call_service.js",
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call_service.js",
       "PackagePath": "staticwebassets\\js\\call_service.js"
     },
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\mqtt.js",
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\mqtt.js",
       "PackagePath": "staticwebassets\\js\\mqtt.js"
     },
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\paho-mqtt.js",
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\paho-mqtt.js",
       "PackagePath": "staticwebassets\\js\\paho-mqtt.js"
     },
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\package-lock.json",
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\package-lock.json",
       "PackagePath": "staticwebassets\\package-lock.json"
     },
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\package.json",
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\package.json",
       "PackagePath": "staticwebassets\\package.json"
-    },
-    {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\video.html",
-      "PackagePath": "staticwebassets\\video.html"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.VideoChat.Microsoft.AspNetCore.StaticWebAssets.props",
