@@ -92,7 +92,8 @@ class MQTTClient {
 
     sendMqtt(e) {
         console.error("MQTT cliet start send Message");
-        if (!this.client.isConnected()) {
+        if (!this.client.isConnected()) 
+        {
             console.error("MQTT client is not connected");
             return;
         }
@@ -157,12 +158,27 @@ class MQTTClient {
         }
     }
 
-    onMessageArrived(message) 
+    async onMessageArrived(message) 
  {
         console.log("onMessageArrived_original: " + message.payloadString);
         var jsonRv = JSON.parse(atob(message.payloadString));
         console.log("onMessageArrived " + JSON.stringify(jsonRv));
         console.log("onMessageArrived " + jsonRv.signal + " - " + jsonRv.dest);
+
+        if(jsonRv.signal=='receiver_answer')
+        {
+            var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
+    
+            var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+        
+            var data=
+            {
+                'data':data_hash,
+                'status_call':"Receiver answer"
+            };
+
+            await axios.post(entry_point,data);
+        }
 
         const now = new Date();
         const timestampSec2 = Math.floor(now.getTime() / 1000);

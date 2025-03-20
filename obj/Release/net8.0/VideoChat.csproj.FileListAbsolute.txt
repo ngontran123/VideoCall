@@ -52,3 +52,8 @@ C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Release\net8.0\refint\VideoChat.
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Release\net8.0\VideoChat.pdb
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Release\net8.0\VideoChat.genruntimeconfig.cache
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Release\net8.0\ref\VideoChat.dll
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Release\net8.0\publish\appsettings.Development.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Release\net8.0\publish\appsettings.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Release\net8.0\publish\VideoChat.deps.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Release\net8.0\publish\VideoChat.runtimeconfig.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Release\net8.0\publish\web.config

@@ -1,7 +1,12 @@
 C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\vpxmd.dll
 C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\VideoChat.exe
+C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\publish\web.config
 C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\appsettings.Development.json
 C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\appsettings.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\publish\appsettings.Development.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\publish\appsettings.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\publish\VideoChat.deps.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\publish\VideoChat.runtimeconfig.json
 C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\VideoChat.dll
 C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\VideoChat.deps.json
 C:\Users\Quan\Downloads\VideoCall\VideoCall\publish\VideoChat.runtimeconfig.json

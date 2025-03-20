@@ -82,28 +82,43 @@ let hotline='';
 function toggleCamera()
 {
     // const videoTrack = localStream.getVideoTracks()[0];
-  
-    const videoTrack = localStream.getVideoTracks();
-    if (!videoTrack) 
-        {  console.log('video track is null');
+    console.log('In this toggle camera');
+    // var videoTrack = localStream.getVideoTracks();
+    // if (!videoTrack) 
+    //     {  console.log('video track is null');
+    //         return;
+    //     }
+
+    if (!callSession) 
+        {
+            status_value.textContent = "No active call to toggle camera.";
+            
             return;
         }
+
 isCameraOn=!isCameraOn;
-  if (videoTrack.length > 0) {
+
+
+// if (videoTrack.length > 0) 
+// {
+//     videoTrack.forEach(track => {
+//       track.enabled = isCameraOn; 
+//     });
+// }
+
+   
+ 
+    if(callSession)
+    { 
+        localStream = callSession.o_session.o_stream_local;
+        videoTrack = localStream.getVideoTracks();
+        if (videoTrack.length > 0) 
+{    console.log('video track is not null during call session');
     videoTrack.forEach(track => {
       track.enabled = isCameraOn; 
     });
 }
-
-   
-
-    // if (!callSession) 
-    // {
-    //     status_value.textContent = "No active call to toggle camera.";
-        
-    //     return;
-    // }
-
+    }
 
 
     videoTrack.enabled = isCameraOn;
@@ -126,13 +141,32 @@ function toggleVoice()
     //     return;
     // }
 
-    const audioTrack = localStream.getAudioTracks()[0];    
+    // var audioTrack = localStream.getAudioTracks()[0];    
 
-    if(!audioTrack) return;
+    // if(!audioTrack) return;
+    if (!callSession) 
+        {
+            status_value.textContent = "No active call to toggle voice.";
+            
+            return;
+        }
 
     isVoiceOn=!isVoiceOn;
 
-    audioTrack.enabled=isVoiceOn;
+    // audioTrack.enabled=isVoiceOn;
+
+    if(callSession)
+    {   
+        localStream=callSession.o_session.o_stream_local;
+        audioTrack=localStream.getAudioTracks();
+        if(audioTrack.length>0)
+        {  console.log('audio track is not null during call session');
+            audioTrack.forEach(track=>
+            {
+                track.enabled=isVoiceOn;
+            });
+        }
+    }
 
     voiceBtn.classList.toggle("off", !isVoiceOn);
 
@@ -153,21 +187,21 @@ async function initializeSipClient()
         return;
     }
 
-    try 
-    {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-        localVideo.srcObject = localStream;
-        status_value.textContent = "Camera preview enabled";
-    } catch (err) 
-    {
-        status_value.textContent = "Failed to access camera: " + err.message;
-        console.error(err);
-        return;
-    }
+    // try 
+    // {
+    //     localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: false });
+    //     localVideo.srcObject = localStream;
+    //     status_value.textContent = "Camera preview enabled";
+    // } catch (err) 
+    // {
+    //     status_value.textContent = "Failed to access camera: " + err.message;
+    //     console.error(err);
+    //     return;
+    // }
 
-   await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-    .then(stream => console.log("Permissions granted"))
-    .catch(error => console.error("Permission denied:", error));
+//    await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+//     .then(stream => console.log("Permissions granted"))
+//     .catch(error => console.error("Permission denied:", error));
 
 
     endCallBtn.disabled=false;
@@ -175,7 +209,8 @@ async function initializeSipClient()
     voiceBtn.disabled=false;
     var entry_point='https://portal-ccbs.mobimart.xyz/api/get-data';
     var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
-    var data={
+    var data=
+    {
         'data':data_hash
     };
     
@@ -198,7 +233,7 @@ async function initializeSipClient()
             enable_early_ims: true,
             enable_media_stream_cache: false,
             bandwidth:{audio:null,video:null},
-            video_size:{minWidth:640,minHeight:480,maxWidth:1280,maxHeight:720},
+            // video_size:{minWidth:640,minHeight:480,maxWidth:1280,maxHeight:720},
             sip_headers: [{ name: "User-Agent", value: "IM-client/OMA1.0 sipML5-v1.2016.03.04" },{name:"Organization",value:"VNPT-IT"}]
         });
 
@@ -372,12 +407,8 @@ async function onSipEventSession(e)
 {  console.log("SIP Event Session:",e.type);
 
     var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
+    
     var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
-    var data={
-        'data':data_hash,
-        'status_call':e.type
-    };
-    await postData(entry_point,data);
 
     switch (e.type) 
     {
@@ -385,7 +416,11 @@ async function onSipEventSession(e)
         case "connecting":
             status_value.textContent = "Call connecting...";
             startRingTone();
-         
+            var data={
+                'data':data_hash,
+                'status_call':"Connecting"
+            };
+            await postData(entry_point,data);
             break;
         case "connected": 
         stopRingTone();
@@ -393,6 +428,12 @@ async function onSipEventSession(e)
             endCallBtn.disabled = false;
             cameraBtn.disabled = false;
             voiceBtn.disabled = false;
+
+            var data={
+                'data':data_hash,
+                'status_call':"Connected"
+            };
+            await postData(entry_point,data);
            
     //         document.getElementById("remoteVideo").srcObject = e.session.getRemoteStreams()[0];
     // document.getElementById("remoteAudio").srcObject = e.session.getRemoteStreams()[0];
@@ -410,10 +451,12 @@ async function onSipEventSession(e)
             isCameraOn = true;
             isVoiceOn = true;
             callSession = null;
-
-            // var data_obj={status:'Disconnected',message:'Call is disconnected'};
-            // await postData('/create-call',data_obj);
-            // Keep localStream active for preview after call ends
+            var data={
+                'data':data_hash,
+                'status_call':"Terminated"
+            };
+            await postData(entry_point,data);
+          
             break;
         case "i_ao_request":
             console.log("Is in out request");
