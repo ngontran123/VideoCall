@@ -81,12 +81,21 @@ let hotline='';
 
 function toggleCamera()
 {
-    const videoTrack = localStream.getVideoTracks()[0];
-
+    // const videoTrack = localStream.getVideoTracks()[0];
+  
+    const videoTrack = localStream.getVideoTracks();
     if (!videoTrack) 
         {  console.log('video track is null');
             return;
         }
+isCameraOn=!isCameraOn;
+  if (videoTrack.length > 0) {
+    videoTrack.forEach(track => {
+      track.enabled = isCameraOn; 
+    });
+}
+
+   
 
     // if (!callSession) 
     // {
@@ -95,7 +104,7 @@ function toggleCamera()
     //     return;
     // }
 
-    isCameraOn=!isCameraOn;
+
 
     videoTrack.enabled = isCameraOn;
 
@@ -361,19 +370,22 @@ function stopRingTone()
 
 async function onSipEventSession(e) 
 {  console.log("SIP Event Session:",e.type);
+
+    var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
+    var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+    var data={
+        'data':data_hash,
+        'status_call':e.type
+    };
+    await postData(entry_point,data);
+
     switch (e.type) 
     {
     
         case "connecting":
             status_value.textContent = "Call connecting...";
             startRingTone();
-            var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
-            var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
-            var data={
-                'data':data_hash,
-                'status_call':'Connecting'
-            };
-            await postData(entry_point,data);
+         
             break;
         case "connected": 
         stopRingTone();
@@ -381,13 +393,7 @@ async function onSipEventSession(e)
             endCallBtn.disabled = false;
             cameraBtn.disabled = false;
             voiceBtn.disabled = false;
-            var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
-            var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
-            var data={
-                'data':data_hash,
-                'status_call':'Connected'
-            };
-            await postData(entry_point,data);
+           
     //         document.getElementById("remoteVideo").srcObject = e.session.getRemoteStreams()[0];
     // document.getElementById("remoteAudio").srcObject = e.session.getRemoteStreams()[0];
             // var data_obj={status:'Connected',message:'Call is connected'};
@@ -404,13 +410,7 @@ async function onSipEventSession(e)
             isCameraOn = true;
             isVoiceOn = true;
             callSession = null;
-            var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
-            var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
-            var data={
-                'data':data_hash,
-                'status_call':'Terminated'
-            };
-            await postData(entry_point,data);
+
             // var data_obj={status:'Disconnected',message:'Call is disconnected'};
             // await postData('/create-call',data_obj);
             // Keep localStream active for preview after call ends
