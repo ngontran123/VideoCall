@@ -1,0 +1,49 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\google_sofiatube7.mp3",
+      "PackagePath": "staticwebassets\\google_sofiatube7.mp3"
+    },
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\SIPml-api.js",
+      "PackagePath": "staticwebassets\\js\\SIPml-api.js"
+    },
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call_service.js",
+      "PackagePath": "staticwebassets\\js\\call_service.js"
+    },
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\mqtt.js",
+      "PackagePath": "staticwebassets\\js\\mqtt.js"
+    },
+    {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\paho-mqtt.js",
+      "PackagePath": "staticwebassets\\js\\paho-mqtt.js"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.VideoChat.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.VideoChat.props",
+      "PackagePath": "build\\VideoChat.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.VideoChat.props",
+      "PackagePath": "buildMultiTargeting\\VideoChat.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.VideoChat.props",
+      "PackagePath": "buildTransitive\\VideoChat.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
