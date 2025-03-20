@@ -168,8 +168,10 @@ class MQTTClient {
         if(jsonRv.signal=='receiver_answer')
         {
             var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
+
+            const hash_id=window.hash_id;
     
-            var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+            var data_hash=hash_id;
         
             var data=
             {

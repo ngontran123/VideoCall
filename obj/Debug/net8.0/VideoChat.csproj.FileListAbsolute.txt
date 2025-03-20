@@ -111,3 +111,8 @@ C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\appsettings
 C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\appsettings.json
 C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\VideoChat.deps.json
 C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\VideoChat.runtimeconfig.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\publish\web.config
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\publish\appsettings.Development.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\publish\appsettings.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\publish\VideoChat.deps.json
+C:\Users\Quan\Downloads\VideoCall\VideoCall\bin\Debug\net8.0\publish\publish\VideoChat.runtimeconfig.json

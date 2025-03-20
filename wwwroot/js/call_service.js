@@ -70,6 +70,8 @@ const voiceBtn = document.getElementById("voiceBtn");
 
 const ringTone = document.getElementById("ringTone");
 
+const hash_id=window.hash_id;
+
 let isCameraOn = true;
 
 
@@ -208,7 +210,8 @@ async function initializeSipClient()
     cameraBtn.disabled=false;
     voiceBtn.disabled=false;
     var entry_point='https://portal-ccbs.mobimart.xyz/api/get-data';
-    var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+    var data_hash=hash_id;
+
     var data=
     {
         'data':data_hash
@@ -408,7 +411,7 @@ async function onSipEventSession(e)
 
     var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
     
-    var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+    var data_hash=hash_id;
 
     switch (e.type) 
     {
