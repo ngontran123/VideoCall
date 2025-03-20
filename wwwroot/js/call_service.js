@@ -169,7 +169,11 @@ async function initializeSipClient() {
     };
 
     var response = await postData(entry_point, data)
-    console.log(response);
+    if(response.error_code==0)
+    {
+        status_value.textContent = "Failed to get SIP Info";
+        return;
+    }
     var data = response.data;
     var message = response.message;
     var data_obj = data.data;

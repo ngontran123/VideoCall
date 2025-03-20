@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PuNioK5lhLFjRDhZk1JlFIOuul/WtxO9yFN+RYZGm8Q=",
+  "Hash": "fsr6htecRbuqifUA1cUCh0mxNu6pkquszH0vQDcNy4E=",
   "Source": "VideoChat",
   "BasePath": "_content/VideoChat",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\call_service.js"
+    },
+    {
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call.js",
+      "SourceId": "VideoChat",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
+      "BasePath": "_content/VideoChat",
+      "RelativePath": "js/call.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\call.js"
     },
     {
       "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\mqtt.js",

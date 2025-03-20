@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\js\\SIPml-api.js"
     },
     {
+      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call.js",
+      "PackagePath": "staticwebassets\\js\\call.js"
+    },
+    {
       "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call_service.js",
       "PackagePath": "staticwebassets\\js\\call_service.js"
     },
