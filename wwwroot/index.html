@@ -24,60 +24,51 @@
             </div>
             <div class="col-12 col-md-6 col-lg-5 video-col">
                 <div class="video-card">
-                    <video id="remoteVideo" autoplay playsinline class="rounded shadow w-100"></video>
+                    <video id="remoteVideo" autoplay="autoplay" playsinline class="rounded shadow w-100"></video>
+                    <audio id="remoteAudio" autoplay="autoplay"></audio>
                     <span class="video-label">Remote</span>
-                    <audio id="remoteAudio" hidden autoplay></audio>                    
-
                 </div>
             </div>
         </div>
 
         <div class="control-container mb-3 w-100">
             <div class="row justify-content-center gx-2 gy-2">
-                <div class="col-12 col-sm-6 col-md-4">
+                <!-- <div class="col-12 col-sm-6 col-md-4">
                     <input type="text" id="hotline" class="form-control" placeholder="Enter hotline (e.g., 18001039)" value="18001077">
-                </div>
+                </div> -->
                 <div class="col-auto">
-                    <button class="btn btn-success" id="startCallBtn">
+                    <button onclick="startSipCall()" class="btn btn-success" id="startCallBtn">
                         <i class="bi bi-telephone-fill me-1"></i> Start Call
                     </button>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-danger" id="endCallBtn" disabled>
+                    <button onclick="endCall()" class="btn btn-danger" id="endCallBtn" disabled>
                         <i class="bi bi-telephone-x-fill me-1"></i> End Call
                     </button>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-secondary" id="cameraBtn" disabled>
+                    <button onclick="toggleCamera()" class="btn btn-secondary" id="cameraBtn" disabled>
                         <i class="bi bi-camera-video-fill me-1"></i> Camera
                     </button>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-secondary" id="voiceBtn" disabled>
+                    <button onclick="toggleVoice()" class="btn btn-secondary" id="voiceBtn" disabled>
                         <i class="bi bi-mic-fill me-1"></i> Voice
                     </button>
                 </div>
             </div>
         </div>
+
         <p id="status" class="text-muted mt-2 text-center"></p>
     </div>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="js/SIPml-api.js"></script>
      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.0/dist/browser/signalr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- <script src="js/SIPml-api.js"></script> -->
-    <!-- <script src="https://pdtt.vnpt.vn/VideoCall_v2/assets/vendor/SIPml.min.js"></script> -->
     <script src="js/paho-mqtt.js"></script>
     <script src ="js/mqtt.js"></script>
-    <script type="module">
-        import { initializeSipClient,startSipCall, endCall, toggleCamera, toggleVoice } from './js/call_service.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeSipClient();
-        });
-        document.getElementById("startCallBtn").addEventListener("click", startSipCall);
-        document.getElementById("endCallBtn").addEventListener("click", endCall);
-        document.getElementById("cameraBtn").addEventListener("click", toggleCamera);
-        document.getElementById("voiceBtn").addEventListener("click", toggleVoice);
-    </script></body>
+    <script src ="js/call_service.js"></script>
+</body>
 </html>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3kKr2FUBfupNqdYqJjEhMr5dBZb7eTEiXcrIzWMUnLw=",
+  "Hash": "PuNioK5lhLFjRDhZk1JlFIOuul/WtxO9yFN+RYZGm8Q=",
   "Source": "VideoChat",
   "BasePath": "_content/VideoChat",
   "Mode": "Default",
@@ -148,44 +148,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\SIPml-api.js"
-    },
-    {
-      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\package-lock.json",
-      "SourceId": "VideoChat",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
-      "BasePath": "_content/VideoChat",
-      "RelativePath": "package-lock.json",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\package-lock.json"
-    },
-    {
-      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\package.json",
-      "SourceId": "VideoChat",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
-      "BasePath": "_content/VideoChat",
-      "RelativePath": "package.json",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\package.json"
     }
   ]
 }

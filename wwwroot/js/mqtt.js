@@ -11,14 +11,21 @@ function base64Data(data) {
     }
 }
 class MQTTClient {
-    constructor() {
-        this.client = new Paho.MQTT.Client
-        (
+
+     call_id;
+    sip_call_id;
+    request_id;
+    phone;
+    constructor(call_id,sip_call_id,request_id,phone) {
+        this.client = new Paho.MQTT.Client(
             "videocall.vnpt.vn",
             Number("8081"),
             "" + Math.random().toString(20).substring(2, 8)
         );
-
+        this.call_id=call_id;
+        this.sip_call_id=sip_call_id;
+        this.request_id=request_id;
+        this.phone=phone;
         this.client.onConnectionLost = this.onConnectionLost.bind(this);
         this.client.onMessageArrived = this.onMessageArrived.bind(this);
     }
@@ -54,7 +61,8 @@ class MQTTClient {
         }
 
         try {
-            this.client.subscribe(topic, {
+            this.client.subscribe(topic, 
+            {
                 qos: qos,
                 onSuccess: () => {
                     console.log(`Successfully subscribed to topic: ${topic}`);
@@ -66,13 +74,16 @@ class MQTTClient {
                 }
             });
             return true;
-        } catch (error) {
+        } catch (error) 
+        {
             console.error("Subscription error:", error);
+            
             return false;
         }
     }
 
-    base64Data(e) {
+    base64Data(e) 
+    {
             return btoa(encodeURIComponent(e).replace(/%([0-9A-F]{2})/g, (function (e, t) {
                 return String.fromCharCode(parseInt(t, 16))
             })))
@@ -94,7 +105,7 @@ class MQTTClient {
         const a = JSON.stringify(s)
         const n = new Paho.MQTT.Message(this.base64Data(a));
         console.log(n);
-        n.destinationName = "UCC/VCall/ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458";
+        n.destinationName = `UCC/VCall/${this.call_id}`;
         n.qos = 0;
         this.client.send(n)
          console.error("MQTT client end send Message ");
@@ -146,29 +157,32 @@ class MQTTClient {
         }
     }
 
-    onMessageArrived(message) {
-        //console.log("onMessageArrived_original: " + message.payloadString);
+    onMessageArrived(message) 
+ {
+        console.log("onMessageArrived_original: " + message.payloadString);
         var jsonRv = JSON.parse(atob(message.payloadString));
-        // console.log("onMessageArrived " + JSON.stringify(jsonRv));
-        //console.log("onMessageArrived " + jsonRv.signal + " - " + jsonRv.dest);
+        console.log("onMessageArrived " + JSON.stringify(jsonRv));
+        console.log("onMessageArrived " + jsonRv.signal + " - " + jsonRv.dest);
 
         const now = new Date();
         const timestampSec2 = Math.floor(now.getTime() / 1000);
         if(jsonRv.signal=='req_customer_info' && jsonRv.dest=='customer')
         {
-          // console.log('send pong back');           
+          var phone_value='0916688623';
+           console.log('send pong back');
+
             const messageData = {
                 "dest": "callcenter",
                 "signal": "res_customer_info",
                 "type_call": "video",
                 "time": timestampSec2,
                 "data": {
-                    "name": "0916688623",
-                    "call_id": "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458",
-                    "sip_call_id": "092805fa-0f34-4067-af8b-bc8291613260",
+                    "name": "0919386795",
+                    "call_id": this.call_id,
+                    "sip_call_id": this.sip_call_id,
                     "data_options": {
-                        "msisdn": "0916688623",
-                        "request_id": "846f925f-9079-4ee7-9f59-b922162457d1"
+                        "msisdn": this.phone,
+                        "request_id": this.request_id
                     }
                 }
             };
@@ -189,7 +203,7 @@ class MQTTClient {
          
          if(jsonRv.signal=='ping' && jsonRv.dest=='customer')
         {
-           //console.log('send ping back');           
+           console.log('send ping back');           
             setTimeout(() => {
                 this.sendMqtt({
                 "dest": "callcenter",
@@ -202,7 +216,7 @@ class MQTTClient {
          }
          if(jsonRv.signal=='pong' && jsonRv.dest=='customer')
         {
-           //console.log('send pong back');           
+           console.log('send pong back');           
             setTimeout(() => {
                 this.sendMqtt({
                 "dest": "callcenter",

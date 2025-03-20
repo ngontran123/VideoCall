@@ -1,4 +1,4 @@
-import SIPml from '../node_modules/ecmascript-webrtc-sipml/SIPml.min.js';
+
 
 let peerConnection;
 
@@ -11,8 +11,7 @@ const signalRConnection = new signalR.HubConnectionBuilder()
 function getMessageData()
 {
 
-const now = new Date();
-
+    const now = new Date();
 const timestampSec2 = Math.floor(now.getTime() / 1000);
     const messageData = {
         "dest": "callcenter",
@@ -20,23 +19,24 @@ const timestampSec2 = Math.floor(now.getTime() / 1000);
         "type_call": "video",
         "time": timestampSec2,
         "data": {
-            "name": "0919262555",
+            "name": "0919386795",
             "call_id": "ios-dfdf-3bea51c7-37f3-4b99-aae4-c800710e5f34-1729160226000",
             "sip_call_id": "092805fa-0f34-4067-af8b-bc8291613260",
             "data_options": {
-                "msisdn": "0919262555",
-                "request_id": "dfaa71cb-6bd0-4449-accfe448-306359fb1194"
+                "msisdn": "0919386795",
+                "request_id": "dfaa71cb-6bd0-4449-feefe484-584488"
             }
         }
     };
 
-    return messageData;    
+    return messageData;
 }
 
 
+const agg="ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458";
 const j = {
     sipml: {
-        impi: "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458" // Replace with your actual SIP identifier
+        impi: "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8f-c27744ac68456" // Replace with your actual SIP identifier
     }
 };
 
@@ -44,17 +44,13 @@ const j = {
 
 let sipStack;
 
-let oSipSessionRegister;
-
-let oConfigCall;
-
 let callSession;
 
 let localStream;
 
-const localVideo = document.getElementById("localVideo");
+let request_id='dfaa71cb-6bd0-4449-acc5-306359fb1194';
 
-const ringTone = document.getElementById("ringTone");
+const localVideo = document.getElementById("localVideo");
 
 
 const remoteVideo = document.getElementById("remoteVideo");
@@ -72,19 +68,25 @@ const cameraBtn = document.getElementById("cameraBtn");
 const voiceBtn = document.getElementById("voiceBtn");
 
 
+const ringTone = document.getElementById("ringTone");
+
 let isCameraOn = true;
 
 
 let isVoiceOn = true;
 
-const mqttClient = new MQTTClient();
+let hotline='';
+
 
 
 function toggleCamera()
 {
     const videoTrack = localStream.getVideoTracks()[0];
 
-    if (!videoTrack) return;
+    if (!videoTrack) 
+        {  console.log('video track is null');
+            return;
+        }
 
     // if (!callSession) 
     // {
@@ -133,32 +135,8 @@ function toggleVoice()
 
 }
 
-function startRingTone()
-{
-    try{
-  ringTone.play();
-    }
-    catch(e)
-    {
-        console.log('Play ringtone exception:'+e);
-    }
-}
-
-function stopRingTone()
-{
-    try
-    {
-    ringTone.pause();
-    }
-    catch(e)
-    {
-        console.log('Stop playing ringtone',e);
-    }
-}
-
 async function initializeSipClient() 
 {   
-try{
     if (typeof SIPml === "undefined") 
     {
         status_value.textContent = "SIPml5 library not loaded!";
@@ -167,16 +145,15 @@ try{
     }
 
     try 
-    {   
+    {
         localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         localVideo.srcObject = localStream;
         status_value.textContent = "Camera preview enabled";
-    } 
-    catch (err) 
+    } catch (err) 
     {
         status_value.textContent = "Failed to access camera: " + err.message;
-        console.error(err);        
-        return;        
+        console.error(err);
+        return;
     }
 
    await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -184,21 +161,53 @@ try{
     .catch(error => console.error("Permission denied:", error));
 
 
+    endCallBtn.disabled=false;
+    cameraBtn.disabled=false;
+    voiceBtn.disabled=false;
+    var entry_point='https://portal-ccbs.mobimart.xyz/api/get-data';
+    var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+    var data={
+        'data':data_hash
+    };
+    
+    var response=await postData(entry_point,data)
+        var data=response.data;
+        var message = response.message;
+        var data_obj=data.data;
+
+        sipStack = new SIPml.Stack({
+            realm: data_obj.realm,
+            impi: data_obj.impi,
+            impu: data_obj.impu,
+            password: data_obj.password,
+            display_name: data_obj.display_name,
+            websocket_proxy_url: data_obj.websocket_server_url,
+            outbound_proxy_url: null,
+            ice_servers: null,
+            enable_rtcweb_breaker: false,
+            events_listener: { events: "*", listener: onSipEventStack },
+            enable_early_ims: true,
+            enable_media_stream_cache: false,
+            bandwidth:{audio:null,video:null},
+            video_size:{minWidth:640,minHeight:480,maxWidth:1280,maxHeight:720},
+            sip_headers: [{ name: "User-Agent", value: "IM-client/OMA1.0 sipML5-v1.2016.03.04" },{name:"Organization",value:"VNPT-IT"}]
+        });
+
+        hotline=data_obj.hotline;
+
+
+    const mqttClient = new MQTTClient(data_obj.call_id,data_obj.sip_call_id,data_obj.request_id,data_obj.phone);
+
     mqttClient.connect();
 
-
    setTimeout(()=>{
-
-    mqttClient.subscribe("UCC/VCall/ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458");
-    // mqttClient.sendMessage("data",j);
-
+    mqttClient.subscribe(`UCC/VCall/${data_obj.call_id}`);
 },2000);
 
-                endCallBtn.disabled=false;
-                cameraBtn.disabled=false;
-                voiceBtn.disabled=false;
 
-// mqttClient.setMessageCallback((message) => {
+
+// mqttClient.setMessageCallback((message) => 
+    {
 //     console.log('Received message:', message);
 //     console.log('Topic:', message.topic);
 //     console.log('Data:', message.data);
@@ -223,162 +232,44 @@ try{
 //     const encodedResult = mqttClient.sendMessage(messageData, j);
 //     });
 
-    sipStack = new SIPml.Stack({
-        realm: "vcc.vnpt.vn",
-        impi: "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458",
-        impu: "sip:ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458@vcc.vnpt.vn:5060",
-        password: "Anb07vl2YGy5BpQH",
-        display_name: "vtttuyen1_vtag",
-        websocket_proxy_url: "wss://vcc.vnpt.vn:4443/ws",
-        outbound_proxy_url: null,
-        ice_servers: null,
-        enable_rtcweb_breaker: false,
-        events_listener: { events: "*", listener: onSipEventStack },
-        enable_early_ims: true,
-        enable_media_stream_cache: false,
-        bandwidth: null,
-        video_size: null,
-        sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }]
-    });
-
     // sipStack = new SIPml.Stack({
     //     realm: "vcc.vnpt.vn",
-    //     impi: "pAmb7pQRUAMiSEDk", // Using hashinfo as impi (assumption)
-    //     impu: "sip:pAmb7pQRUAMiSEDk@vcc.vnpt.vn:5060", // Constructed from hashinfo and domain
-    //     password: null, // Not provided in JSON; must be added if required
-    //     display_name: null, // Not provided; optional
+    //     impi: "ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458",
+    //     impu: "sip:ios-vtttuyenlxn_agg-d8b4930a-cb17-45d3-8d8d-c2722ab60458@vcc.vnpt.vn:5060",
+    //     password: "Anb07vl2YGy5BpQH",
+    //     display_name: "vttnttuyen15_vtag",
     //     websocket_proxy_url: "wss://vcc.vnpt.vn:4443/ws",
-    //     outbound_proxy_url: "", // Empty string as per sip_outboundproxy_url
-    //     ice_servers: [], // Empty array as per "[]"
+    //     outbound_proxy_url: null,
+    //     ice_servers: null,
     //     enable_rtcweb_breaker: false,
-    //     events_listener: { events: "*", listener: onSipEventStack }, // Assumed for completeness
-    //     enable_early_ims: true, // Inverted from disable_early_ims: "false"
-    //     enable_media_stream_cache: false, // From enable_media_caching: "false"
-    //     bandwidth: null, // Empty string interpreted as null
-    //     video_size: null, // Empty string interpreted as null
-    //     sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }], // Carried over from prior context
-    //     enable_debug: true // Inverted from disable_debug: "false"
+    //     events_listener: { events: "*", listener: onSipEventStack },
+    //     enable_early_ims: true,
+    //     enable_media_stream_cache: false,
+    //     bandwidth: null,
+    //     video_size: null,
+    //     sip_headers: [{ name: "User-Agent", value: "dart-sip-ua v0.2.2" }]
     // });
 
 
-    if(sipStack.start()!=0)
-    {
-        status_value.textContent = "SIP client initialized failed";
-    }
-    
-   console.log("init here");
 
+    sipStack.start();
+    
     status_value.textContent = "SIP client initialized here";
 
-    return;
 }
-catch(e)
+}
+
+function onSipEventStack(e) 
 {
-    console.log("Init sip error:"+e);
-}
-
-    // signalRConnection.start()
-    //     .then(() => console.log("SignalR Connected"))
-    //     .catch(err => status_value.textContent = `SignalR error: ${err.message}`);
-}
-
-function onSipEventStack(e) {
-    // switch (e.type) 
-    // {
-    //     case "started": 
-    //         status_value.textContent = "SIP client started"; 
-    //         break;
-    //     case "failed_to_start": 
-    //         status_value.textContent = "SIP client failed: " + e.description; 
-    //         break;
-    // }
-    console.log('==stack event = ' + e.type);
-    switch (e.type) {
-        case 'started':
-            {
-                try {
-                    // LogIn (REGISTER) as soon as the stack finish starting
-                    oSipSessionRegister = sipStack.newSession('register', {
-                        expires: 200,
-                        events_listener: { events: '*', listener: onSipEventSession },
-                        sip_caps: [
-                                    { name: '+g.oma.sip-im', value: null },
-                                    { name: '+audio', value: null },
-                                    { name: 'language', value: '\"en,fr\"' }
-                        ]
-                    });
-                    oSipSessionRegister.register();
-                    status_value.textContent = "SIP client is registered";
-                }
-                catch (e) {
-                    console.log("<b>1:" + e + "</b>");
-                    //btnRegister.disabled = false;
-                }
-                break;
-            }
-        case 'stopping': case 'stopped': case 'failed_to_start': case 'failed_to_stop':
-            {
-                var bFailure = (e.type == 'failed_to_start') || (e.type == 'failed_to_stop');
-                sipStack = null;
-                oSipSessionRegister = null;
-                callSession = null;
-
-                //uiOnConnectionEvent(false, false);
-
-                // this.stopRingbackTone();
-                // this.stopRingTone();
-
-                //uiVideoDisplayShowHide(false);
-                //divCallOptions.style.opacity = 0;
-
-                //txtCallStatus.innerHTML = '';
-                console.log(bFailure ? "<i>Disconnected: <b>" + e.description + "</b></i>" : "<i>Disconnected</i>")
-
-                break;
-            }
-
-        case 'i_new_call':
-            {
-                if (callSession) {
-                    // do not accept the incoming call if we're already 'in call'
-                    e.newSession.hangup(); // comment this line for multi-line support
-                }
-                else {
-                    callSession = e.newSession;
-                    // start listening for events
-                  callSession.setConfiguration(oConfigCall);
-                    console.log("Answer / Reject")
-                    //uiBtnCallSetText('Answer');
-                    //btnHangUp.value = 'Reject';
-                    //btnCall.disabled = false;
-                    //btnHangUp.disabled = false;
-
-                    startRingTone();
-
-                    var sRemoteNumber = (callSession.getRemoteFriendlyName() || 'unknown');
-                    console.log("<i>Incoming call from [<b>" + sRemoteNumber + "</b>]</i>");
-                    //showNotifICall(sRemoteNumber);
-                }
-                break;
-            }
-
-        case 'm_permission_requested':
-            {
-                //divGlassPanel.style.visibility = 'visible';
-                break;
-            }
-        case 'm_permission_accepted':
-        case 'm_permission_refused':
-            {
-                //divGlassPanel.style.visibility = 'hidden';
-                if (e.type == 'm_permission_refused') {
-                
-                    //uiCallTerminated('Media stream permission denied');
-                }
-                break;
-            }
-
-        case 'starting': default: break;
+    console.log("SIP Event:",e.type);
+    switch (e.type) 
+    {   
+        case "started": 
+            status_value.textContent = "SIP client started"; 
+            break;
+        case "failed_to_start": 
+            status_value.textContent = "SIP client failed: " + e.description; 
+            break;
     }
 }
 
@@ -444,78 +335,67 @@ async function startCall(hotline) {
     signalRConnection.invoke("InitiateCall", hotline); 
 }
 
-async function onSipEventSession(e) 
+function startRingTone()
 {
-    switch (e.type) {
-        // case "connecting":
-        //     status_value.textContent = "Call connecting...";
-        //     endCallBtn.disabled = false;
-        //     break;
-        // case "connected": 
-        // status_value.textContent = "Call connected!"; 
-        //     endCallBtn.disabled = false;
-        //     cameraBtn.disabled = false;
-        //     voiceBtn.disabled = false;
-        //     console.log("Local Video Tracks:", localVideo.srcObject?.getVideoTracks());
+    try{
+  ringTone.play();
+    }
+    catch(e)
+    {
+        console.log('Play ringtone exception:'+e);
+    }
+}
 
-        //     console.log("Remote Video Tracks:", remoteVideo.srcObject?.getVideoTracks());
+function stopRingTone()
+{
+    try
+    {
+    ringTone.pause();
+    }
+    catch(e)
+    {
+        console.log('Stop playing ringtone',e);
+    }
+}
 
-        //     console.log("Remote Audio Tracks:", remoteVideo.srcObject?.getAudioTracks());
 
-        //     // console.log("Local Audio Tracks:", document.getElementById("remoteAudio").srcObject?.getAudioTracks());
-
-        //     break;
-        case 'connecting': case 'connected':
-            {   
-                var bConnected = (e.type == 'connected');
-                if (e.session == oSipSessionRegister) {
-                    //uiOnConnectionEvent(bConnected, !bConnected);
-                    console.log("<i>" + e.description + "</i>");
-                }
-                else if (e.session == callSession) 
-                {
-                    startRingTone();
-
-                    console.log('Call session in here');
-                    //btnHangUp.value = 'HangUp';
-                    //btnCall.disabled = true;
-                    //btnHangUp.disabled = false;
-                    //btnTransfer.disabled = false;
-                    //if (window.btnBFCP) window.btnBFCP.disabled = false;
-                         
-                    if (bConnected) 
-                    {
-
-                        status_value.textContent = "Call connected";
-                        // this.stopRingbackTone();
-                        stopRingTone();
-
-                        // if (this.oNotifICall) {
-                        //     this.oNotifICall.cancel();
-                        //     this.oNotifICall = null;
-                        // }
-                    }
-
-                    console.log("<i>" + e.description + "</i>");
-                    //divCallOptions.style.opacity = bConnected ? 1 : 0;
-
-                    if (SIPml.isWebRtc4AllSupported()) 
-                    {
-                        console.log('Is WebRTC provided') 
-                        // IE don't provide stream callback
-                        //uiVideoDisplayEvent(false, true);
-                        //uiVideoDisplayEvent(true, true);
-                    }
-                }
-                break;
-            } // 'connecting' | 'connected'
-      case 'terminating':  case "terminated":
-        { 
-        console.log("End call here:"+e.type);
-
-        status_value.textContent = "Call ended"; 
-
+async function onSipEventSession(e) 
+{  console.log("SIP Event Session:",e.type);
+    switch (e.type) 
+    {
+    
+        case "connecting":
+            status_value.textContent = "Call connecting...";
+            startRingTone();
+            var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
+            var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+            var data={
+                'data':data_hash,
+                'status_call':'Connecting'
+            };
+            await postData(entry_point,data);
+            break;
+        case "connected": 
         stopRingTone();
+        status_value.textContent = "Call connected!"; 
+            endCallBtn.disabled = false;
+            cameraBtn.disabled = false;
+            voiceBtn.disabled = false;
+            var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
+            var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+            var data={
+                'data':data_hash,
+                'status_call':'Connected'
+            };
+            await postData(entry_point,data);
+    //         document.getElementById("remoteVideo").srcObject = e.session.getRemoteStreams()[0];
+    // document.getElementById("remoteAudio").srcObject = e.session.getRemoteStreams()[0];
+            // var data_obj={status:'Connected',message:'Call is connected'};
+            // await postData('/create-call',data_obj);
+            break;
+        case "terminated": 
+        stopRingTone();
+        status_value.textContent = "Call ended"; 
             // endCallBtn.disabled = true;
             // cameraBtn.disabled = true;
             // voiceBtn.disabled = true;
@@ -524,18 +404,19 @@ async function onSipEventSession(e)
             isCameraOn = true;
             isVoiceOn = true;
             callSession = null;
+            var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
+            var data_hash='eyJpdiI6IjQ0QmFhMG9KcGZ5emdhOW0rcjdYWVE9PSIsInZhbHVlIjoibENLK0V3SXFJODVPYjloREZRVDB6UT09IiwibWFjIjoiNTJjN2EwMmYzMjEwMjA5YjRiMThmOWMxMDVhNGYyYmE2ZDEwZmNmZjAxOGI4NjZlMzkyMDRmMjIwYWY3ZTI3ZiIsInRhZyI6IiJ9';
+            var data={
+                'data':data_hash,
+                'status_call':'Terminated'
+            };
+            await postData(entry_point,data);
+            // var data_obj={status:'Disconnected',message:'Call is disconnected'};
+            // await postData('/create-call',data_obj);
+            // Keep localStream active for preview after call ends
             break;
-        }
-
-        case 'm_early_media':
-            {
-                if (e.session == callSession) {
-                    stopRingTone();
-                    console.log('<i>Early media started</i>');
-                }
-                break;
-            }
         case "i_ao_request":
+            console.log("Is in out request");
             if (e.getSipResponseCode() === 180) status_value.textContent = "Ringing...";
             break;
         case "m_stream_video_local_added":
@@ -543,34 +424,24 @@ async function onSipEventSession(e)
             break;
         case "m_stream_video_remote_added":
             console.log("Remote Stream Added");
+            const remoteVideoElement = document.getElementById("remoteVideo");
+console.log("Remote Video Element:", remoteVideoElement);
+console.log("Assigned Stream:", remoteVideoElement ? remoteVideoElement.srcObject : "No srcObject assigned");
+console.log("event video value",e);
             break;
         case "m_stream_audio_local_added":
             console.log("Local Audio Stream Added");
             break;
         case "m_stream_audio_remote_added":
-            // console.log("Remote media tracks:", callSession.oSipSessionCall.getRemoteStreams());
-            console.log("Remote audio added:", e);
-            // console.log("Remote audio stream added:", e.stream);
-
+            console.log("Remote Audio Stream Added");
             const remoteAudioElement = document.getElementById("remoteAudio");
+            remoteAudioElement.play().catch(error => {
+                console.error('Error playing audio:', error);
+              });
 console.log("Remote Audio Element:", remoteAudioElement);
 console.log("Assigned Stream:", remoteAudioElement ? remoteAudioElement.srcObject : "No srcObject assigned");
 console.log("here");
 console.log("event value",e);
-if(e.session)
-    {
-      console.log("there is session",e.session);
-
-    }
-    if(!remoteAudioElement.srcObject)
-    {
-        console.log("No srcObject assigned");
-    }
-    else{
-        console.log("srcObject assigned");
-        remoteAudio.play().catch(err => console.error("Failed to play audio:", err));
-    }
-      // Attempt to get remote streams from WebRTC PeerConnection
             break;
         default:
             console.log("Other Stream Event:",e.type);
@@ -579,51 +450,38 @@ if(e.session)
 }
 function startSipCall() 
 {
-    const hotline = document.getElementById("hotline").value;
+    // const hotline = document.getElementById("hotline").value;
+    
     
     if(!hotline) 
     {
-        status_value.textContent = "Please enter a hotline.";
+        status_value.textContent = "Hotline is empty";
+        
         return;
     }
 
+  
+
+    status_value.textContent = `Calling ${hotline}...`;
      
-    localVideo.muted = true;
-    
-    oConfigCall={
+    localVideo.muted = true;    
+
+    callSession = sipStack.newSession("call-audiovideo", 
+    {   
         video_local:  document.getElementById("localVideo"),
         video_remote: document.getElementById("remoteVideo"),
         audio_remote: document.getElementById("remoteAudio"),
-        bandwidth: {  audio: null, video: null},
-        video_size:{minWidth:640,minHeight:480,maxWidth:1280,maxHeight:720},
-        screencast_window_id: 0,
+        bandwidth: { audio:null, video:null},
+        //video_size:{minWidth:640,minHeight:480,maxWidth:5000,maxHeight:4000},
         events_listener: 
         { 
             events: "*", 
             listener:onSipEventSession
         },
         sip_caps:[{name:"+g.oma.sip-im"},{name:"language",value:"'en,fr'"}]
-    }
+    });
 
-    callSession = sipStack.newSession("call-audio", oConfigCall);
-
-        console.log("value here:"+hotline);
-
-        if (callSession.call(hotline) != 0) {
-            callSession = null;
-            status_value.textContent='Failed to make call';
-                        //btnCall.disabled = false;
-            //btnHangUp.disabled = true;
-            return;
-        }
-        // this.callSession.call(hotline);
-
-        status_value.textContent = `Calling ${hotline}...`;
-
-        //saveCallOptions();
-    
-        // callSession.call(hotline);
-
+    callSession.call(hotline);
 
     // const encodedResult = mqttClient.sendMessage(getMessageData(), j);
     // if (encodedResult) {
@@ -637,7 +495,8 @@ function startSipCall()
 
 function endCall() 
 {
-    if (callSession) {
+    if (callSession) 
+    {
         callSession.hangup();
         endCallBtn.disabled = true;
         callSession = null;
@@ -645,30 +504,19 @@ function endCall()
 }
 
 async function postData(entry_point,data)
-{
-  await axios.post(entry_point,data)
-  .then(response => {
-    alert(response.message);
-  })
+{ 
+  var response =await axios.post(entry_point,data);
+  return response;
 }
 
 // window.startVideoCall = (hotline) => {
 //     startCall(hotline);
 // };
 
-// window.onload=()=>{
-//     initializeSipClient();};
-
-// window.startSipCall = startSipCall;
-
-// window.endCall=endCall;
-
-export {initializeSipClient, startSipCall, endCall,toggleCamera,toggleVoice};
-
-// window.toggleCamera=toggleCamera;
-
-// window.toggleVoice=toggleVoice;
-
+window.onload=()=>
+{
+    initializeSipClient();
+};
 
 // window.initializeWebRTC = () => initializeSipClient();
 
