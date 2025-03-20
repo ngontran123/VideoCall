@@ -169,13 +169,22 @@ async function initializeSipClient() {
     };
 
     var response = await postData(entry_point, data)
-    if(response.error_code==0)
-    {
-        status_value.textContent = "Failed to get SIP Info";
-        return;
-    }
+
+    
+
+
     var data = response.data;
+
+    if(data.error_code==0)
+     {
+            status_value.textContent = "Failed to get SIP Info";
+           
+            return;
+    }
+    
     var message = response.message;
+    
+
     var data_obj = data.data;
 
     sipStack = new SIPml.Stack({
