@@ -1,31 +1,21 @@
-function base64Data(data) {
-    try {
-        const dataString = typeof data === 'string' ? data : JSON.stringify(data);
-        const encoded = encodeURIComponent(dataString).replace(/%([0-9A-F]{2})/g, (match, p1) => {
-            return String.fromCharCode(parseInt(p1, 16));
-        });
-        return btoa(encoded);
-    } catch (error) {
-        console.error("Base64 encoding error:", error);
-        return null;
-    }
-}
 class MQTTClient {
 
-     call_id;
+    call_id;
     sip_call_id;
     request_id;
     phone;
-    constructor(call_id,sip_call_id,request_id,phone) {
+    data_hash;
+    constructor(call_id, sip_call_id, request_id, phone, data_hash) {
         this.client = new Paho.MQTT.Client(
             "videocall.vnpt.vn",
             Number("8081"),
             "" + Math.random().toString(20).substring(2, 8)
         );
-        this.call_id=call_id;
-        this.sip_call_id=sip_call_id;
-        this.request_id=request_id;
-        this.phone=phone;
+        this.call_id = call_id;
+        this.sip_call_id = sip_call_id;
+        this.request_id = request_id;
+        this.data_hash = data_hash;
+        this.phone = phone;
         this.client.onConnectionLost = this.onConnectionLost.bind(this);
         this.client.onMessageArrived = this.onMessageArrived.bind(this);
     }
@@ -39,7 +29,7 @@ class MQTTClient {
             reconnect: true,
             onSuccess: () => {
                 console.log("MQTT Connected");
-   
+
             },
             onFailure: (e) => {
                 alert("MQTT Connection Failed: " + e.errorMessage);
@@ -49,7 +39,6 @@ class MQTTClient {
         try {
             this.client.connect(configMqtt);
         } catch (error) {
-            alert("Lỗi kết nối MQTT: " + error);
             console.error("Connection error:", error);
         }
     }
@@ -61,39 +50,34 @@ class MQTTClient {
         }
 
         try {
-            this.client.subscribe(topic, 
-            {
-                qos: qos,
-                onSuccess: () => {
-                    console.log(`Successfully subscribed to topic: ${topic}`);
-                    return true;
-                },
-                onFailure: (error) => {
-                    console.error(`Failed to subscribe to ${topic}: ${error.errorMessage}`);
-                    return false;
-                }
-            });
+            this.client.subscribe(topic,
+                {
+                    qos: qos,
+                    onSuccess: () => {
+                        return true;
+                    },
+                    onFailure: (error) => {
+                        console.error(`Failed to subscribe to ${topic}: ${error.errorMessage}`);
+                        return false;
+                    }
+                });
             return true;
-        } catch (error) 
-        {
+        } catch (error) {
             console.error("Subscription error:", error);
-            
             return false;
         }
     }
 
-    base64Data(e) 
-    {
-            return btoa(encodeURIComponent(e).replace(/%([0-9A-F]{2})/g, (function (e, t) {
-                return String.fromCharCode(parseInt(t, 16))
-            })))
-        }
+    enData(e) {
+        return btoa(encodeURIComponent(e).replace(/%([0-9A-F]{2})/g, (function (e, t) {
+            return String.fromCharCode(parseInt(t, 16))
+        })))
+    }
 
 
-    sendMqtt(e) {
+    pushMsg(e) {
         console.error("MQTT cliet start send Message");
-        if (!this.client.isConnected()) 
-        {
+        if (!this.client.isConnected()) {
             console.error("MQTT client is not connected");
             return;
         }
@@ -104,52 +88,12 @@ class MQTTClient {
             time: i
         }
         const a = JSON.stringify(s)
-        const n = new Paho.MQTT.Message(this.base64Data(a));
+        const n = new Paho.MQTT.Message(this.enData(a));
         console.log(n);
         n.destinationName = `UCC/VCall/${this.call_id}`;
         n.qos = 0;
         this.client.send(n)
-         console.error("MQTT client end send Message ");
-    }
-
-    sendMessage(data, sipmlData) {
-        if (!this.client.isConnected()) {
-            console.error("MQTT client is not connected");
-            return;
-        }
-
-        try {
-            let timestamp = Math.floor(new Date().getTime() / 1000);
-
-            const messageData = {
-                ...data,
-                time: timestamp
-            };
-
-            console.log("Message data:", messageData);
-
-            const jsonString = JSON.stringify(messageData);
-            
-            const encodedData = base64Data(jsonString); 
-
-            if (!encodedData)
-            {
-                console.log("Failed to encode message data");
-                throw new Error("Failed to encode message data");
-            }
-            const temp_topic=`UCC/VCall/${sipmlData.sipml.impi}`;
-            const message = new Paho.MQTT.Message(encodedData);
-            message.destinationName =sipmlData.sipml.impi;
-            message.qos = 0;
-
-            this.client.send(message);
-            console.log(`Message sent to ${message.destinationName}`);
-            
-            return encodedData;
-        } catch (error) {
-            console.error("Error sending message:", error);
-            return null;
-        }
+        console.error("MQTT client end send Message ");
     }
 
     onConnectionLost(responseObject) {
@@ -158,44 +102,30 @@ class MQTTClient {
         }
     }
 
-    async onMessageArrived(message) 
- {
+    async onMessageArrived(message) {
         console.log("onMessageArrived_original: " + message.payloadString);
         var jsonRv = JSON.parse(atob(message.payloadString));
         console.log("onMessageArrived " + JSON.stringify(jsonRv));
-        console.log("onMessageArrived " + jsonRv.signal + " - " + jsonRv.dest);
 
-        if(jsonRv.signal=='receiver_answer')
-        {
-            var entry_point='https://portal-ccbs.mobimart.xyz/api/update-status';
-
-            const hash_id=window.hash_id;
-    
-            var data_hash=hash_id;
-        
-            var data=
+        if (jsonRv.signal != 'ping' && jsonRv.signal != 'pong') {
+            var submit = this.data_hash;
+            var data =
             {
-                'data':data_hash,
-                'status_call':"Receiver answer"
+                'data': submit,
+                'status_call': jsonRv.signal,
             };
-
-            await axios.post(entry_point,data);
+            await axios.post("https://portal-ccbs.mobimart.xyz/api/update-status", data);
         }
-
         const now = new Date();
         const timestampSec2 = Math.floor(now.getTime() / 1000);
-        if(jsonRv.signal=='req_customer_info' && jsonRv.dest=='customer')
-        {
-          var phone_value='0916688623';
-           console.log('send pong back');
-
+        if (jsonRv.signal == 'req_customer_info' && jsonRv.dest == 'customer') {
             const messageData = {
                 "dest": "callcenter",
                 "signal": "res_customer_info",
                 "type_call": "video",
                 "time": timestampSec2,
                 "data": {
-                    "name": "0919386795",
+                    "name": this.phone,
                     "call_id": this.call_id,
                     "sip_call_id": this.sip_call_id,
                     "data_options": {
@@ -204,46 +134,42 @@ class MQTTClient {
                     }
                 }
             };
-            this.sendMqtt(messageData);
-                console.log('start before timeout');   
+            this.pushMsg(messageData);
+            console.log('start before timeout');
             setTimeout(() => {
-                console.log('process before ping');   
-            this.sendMqtt({
-                "dest": "callcenter",
-                "signal": "ping",
-                "type_call": "video",
-                "time": Math.floor((new Date()).getTime() / 1000),
-                "data": {}
+                console.log('process before ping');
+                this.pushMsg({
+                    "dest": "callcenter",
+                    "signal": "ping",
+                    "type_call": "video",
+                    "time": Math.floor((new Date()).getTime() / 1000),
+                    "data": {}
                 });
-            },3000)
-                    
-         }
-         
-         if(jsonRv.signal=='ping' && jsonRv.dest=='customer')
-        {
-           console.log('send ping back');           
+            }, 4000)
+
+        }
+
+        if (jsonRv.signal == 'ping' && jsonRv.dest == 'customer') {
             setTimeout(() => {
-                this.sendMqtt({
-                "dest": "callcenter",
-                "signal": "pong",
-                "type_call": "video",
-                "time": Math.floor((new Date()).getTime() / 1000),
-                "data": {}
+                this.pushMsg({
+                    "dest": "callcenter",
+                    "signal": "pong",
+                    "type_call": "video",
+                    "time": Math.floor((new Date()).getTime() / 1000),
+                    "data": {}
                 });
-            },2000)
-         }
-         if(jsonRv.signal=='pong' && jsonRv.dest=='customer')
-        {
-           console.log('send pong back');           
+            }, 4000)
+        }
+        if (jsonRv.signal == 'pong' && jsonRv.dest == 'customer') {
             setTimeout(() => {
-                this.sendMqtt({
-                "dest": "callcenter",
-                "signal": "ping",
-                "type_call": "video",
-                "time": Math.floor((new Date()).getTime() / 1000),
-                "data": {}
+                this.pushMsg({
+                    "dest": "callcenter",
+                    "signal": "ping",
+                    "type_call": "video",
+                    "time": Math.floor((new Date()).getTime() / 1000),
+                    "data": {}
                 });
-            },2000)
-         }
-   }
+            }, 4000)
+        }
+    }
 }
