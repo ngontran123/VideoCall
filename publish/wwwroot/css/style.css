@@ -1,0 +1,156 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f1f3f4;
+    color: #202124;
+}
+
+h1 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 500;
+    color: #1a73e8;
+}
+
+.video-col {
+    display: flex;
+    justify-content: center;
+}
+
+.video-card {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.video-card video 
+{
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    background-color: #000;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video-label {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #5f6368;
+    font-weight: 500;
+}
+
+.control-container {
+    max-width: 800px;
+}
+
+.form-control {
+    border-radius: 20px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1px solid #dadce0;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.btn 
+{
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.btn-success {
+    background-color: #0d652d;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #094c23;
+}
+
+.btn-danger {
+    background-color: #d93025;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #b0261e;
+}
+
+.btn-secondary {
+    background-color: #5f6368; /* Google Meet gray */
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #4d5155;
+}
+
+.btn-secondary.off {
+    background-color: #d93025; /* Red when off */
+}
+
+.btn-secondary.off:hover {
+    background-color: #b0261e;
+}
+
+#status {
+    font-size: 1rem;
+    color: #5f6368;
+    font-weight: 400;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .video-card {
+        max-width: 100%;
+    }
+
+    .btn {
+        padding: 6px 12px;
+
+        font-size: 0.85rem;
+    }
+
+    .form-control 
+    {
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .video-card video {
+        max-height: 200px;
+    }
+
+    .control-container .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .control-container .col-auto,
+    .control-container .col-12 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .form-control {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
