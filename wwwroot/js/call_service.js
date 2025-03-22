@@ -35,7 +35,6 @@ const ringTone = document.getElementById("ringTone");
 
 let isCameraOn = true;
 
-
 let isVoiceOn = true;
 
 let hotline = '';
@@ -170,22 +169,24 @@ async function initializeSipClient() {
 
     var response = await postData(entry_point, data)
 
-    
-
-
     var data = response.data;
 
     if(data.error_code==0)
      {
             status_value.textContent = "Failed to get SIP Info";
-           
+
             return;
     }
     
     var message = response.message;
     
-
     var data_obj = data.data;
+
+    SIPml.init(function(e){ console.info('engine is ready'); }, function(e){ console.info('Error: ' + e.message); });
+
+    SIPml.getNavigatorFriendlyName()
+
+
 
     sipStack = new SIPml.Stack({
         realm: data_obj.realm,
@@ -200,7 +201,7 @@ async function initializeSipClient() {
         events_listener: { events: "*", listener: onSipEventStack },
         enable_early_ims: true,
         enable_media_stream_cache: false,
-        bandwidth: { audio: null, video: null },
+        bandwidth: { audio: undefined, video: undefined },
         video_size: { minWidth: 640, minHeight: 480, maxWidth: 1280, maxHeight: 720 },
         sip_headers: [{ name: "User-Agent", value: "IM-client/OMA1.0 sipML5-v1.2016.03.04" }, { name: "Organization", value: "VNPT-IT" }]
     });
@@ -375,8 +376,8 @@ function startSipCall() {
             video_local: document.getElementById("localVideo"),
             video_remote: document.getElementById("remoteVideo"),
             audio_remote: document.getElementById("remoteAudio"),
-            bandwidth: { audio: null, video: null },
-            //video_size:{minWidth:640,minHeight:480,maxWidth:5000,maxHeight:4000},
+            bandwidth: { audio: undefined, video: undefined },
+            video_size:{minWidth: 640, minHeight: 480, maxWidth: 1280, maxHeight: 720 },
             events_listener:
             {
                 events: "*",
@@ -385,7 +386,29 @@ function startSipCall() {
             sip_caps: [{ name: "+g.oma.sip-im" }, { name: "language", value: "'en,fr'" }]
         });
 
-    callSession.call(hotline);
+
+    
+        
+        // callSession.on("sdp", (e) => {
+        //     let sdp = e.sdp.replace(/max-fs=\d+/g, "max-fs=8160") 
+        //                     .replace(/max-mbps=\d+/g, "max-mbps=245760");
+        //     e.sdp = sdp;
+        // });
+
+        navigator.mediaDevices.getUserMedia(
+        {
+            video: {
+                width: { ideal: 1280 },  
+                height: { ideal: 720 },  
+                frameRate: { ideal: 30 } 
+            },
+            audio: true
+        }).then(stream => 
+        {
+            callSession.call(hotline);
+        }).catch(error => console.error("Camera error:", error));
+
+    // callSession.call(hotline);
 }
 
 function endCall() {

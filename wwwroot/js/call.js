@@ -37,7 +37,6 @@ const ringTone = document.getElementById("ringTone");
 
 let isCameraOn = true;
 
-
 let isVoiceOn = true;
 
 let hotline = '';
@@ -189,7 +188,7 @@ async function initializeSipClient() {
         events_listener: { events: "*", listener: onSipEventStack },
         enable_early_ims: true,
         enable_media_stream_cache: false,
-        bandwidth: { audio: null, video: null },
+        bandwidth: { audio: null, video: 1000 },
         video_size: { minWidth: 640, minHeight: 480, maxWidth: 1280, maxHeight: 720 },
         sip_headers: [{ name: "User-Agent", value: "IM-client/OMA1.0 sipML5-v1.2016.03.04" }, { name: "Organization", value: "VNPT-IT" }]
     });
@@ -364,8 +363,8 @@ function startSipCall() {
             video_local: document.getElementById("localVideo"),
             video_remote: document.getElementById("remoteVideo"),
             audio_remote: document.getElementById("remoteAudio"),
-            bandwidth: { audio: null, video: null },
-            //video_size:{minWidth:640,minHeight:480,maxWidth:5000,maxHeight:4000},
+            bandwidth: { audio: null, video: 1000 },
+            video_size:{minWidth: 640, minHeight: 480, maxWidth: 1920, maxHeight: 1080},
             events_listener:
             {
                 events: "*",
