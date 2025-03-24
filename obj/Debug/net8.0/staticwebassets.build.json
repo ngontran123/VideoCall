@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fsr6htecRbuqifUA1cUCh0mxNu6pkquszH0vQDcNy4E=",
+  "Hash": "Ov4qOhXOrLy19PvNqigQFYX+AD1VkacFMzaFJX18+Mo=",
   "Source": "VideoChat",
   "BasePath": "_content/VideoChat",
   "Mode": "Default",
@@ -167,6 +167,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\SIPml-api.js"
+    },
+    {
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\sipml.js",
+      "SourceId": "VideoChat",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
+      "BasePath": "_content/VideoChat",
+      "RelativePath": "js/sipml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\sipml.js"
     }
   ]
 }
