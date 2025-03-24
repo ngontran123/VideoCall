@@ -182,9 +182,18 @@ async function initializeSipClient() {
     
     var data_obj = data.data;
 
-    SIPml.init(function(e){ console.info('engine is ready'); }, function(e){ console.info('Error: ' + e.message); });
+    SIPml.init(function() {
 
-    SIPml.getNavigatorFriendlyName()
+        console.log("be ready to init");
+        console.log("getPlugin:", typeof getPlugin);
+        var config = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+        var pc = new RTCPeerConnection(config);
+        console.log("PeerConnection:", pc);
+    });
+
+    // SIPml.init(function(e){ console.info('engine is ready'); }, function(e){ console.info('Error: ' + e.message); });
+
+    // SIPml.getNavigatorFriendlyName()
 
 
 
