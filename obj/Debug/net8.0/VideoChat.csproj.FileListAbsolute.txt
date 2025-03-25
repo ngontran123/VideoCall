@@ -116,3 +116,13 @@ C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Debug\net8.0\refint\VideoChat.dl
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Debug\net8.0\VideoChat.pdb
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Debug\net8.0\VideoChat.genruntimeconfig.cache
 C:\Users\Quan\Downloads\VideoCall\VideoCall\obj\Debug\net8.0\ref\VideoChat.dll
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\publish\web.config
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\web.config
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\appsettings.Development.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\appsettings.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\publish\appsettings.Development.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\publish\appsettings.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\publish\VideoChat.deps.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\publish\VideoChat.runtimeconfig.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\VideoChat.deps.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\VideoChat.runtimeconfig.json

@@ -185,11 +185,29 @@ async function initializeSipClient() {
     SIPml.init(function() {
 
         console.log("be ready to init");
-        console.log("getPlugin:", typeof getPlugin);
+        var plugin = SIPml.getPlugin();
+        console.log("Plugin here is:",plugin);
         var config = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
         var pc = new RTCPeerConnection(config);
         console.log("PeerConnection:", pc);
     });
+
+    if (!SIPml.isWebRtcSupported()) 
+        {
+        if (SIPml.getNavigatorFriendlyName() == 'chrome') 
+        {
+         alert("You're using an old Chrome version or WebRTC is not enabled.");
+
+         return;
+        }
+        else 
+        {
+            console.log("Browser name:"+SIPml.getNavigatorFriendlyName());            
+            if (confirm("webrtc-everywhere extension is not installed. Do you want to install it?\nIMPORTANT: You must restart your browser after the installation.")) {
+                window.location = 'https://github.com/sarandogou/webrtc-everywhere';
+            }
+        }
+    }
 
     // SIPml.init(function(e){ console.info('engine is ready'); }, function(e){ console.info('Error: ' + e.message); });
 
@@ -210,7 +228,7 @@ async function initializeSipClient() {
         events_listener: { events: "*", listener: onSipEventStack },
         enable_early_ims: true,
         enable_media_stream_cache: false,
-        bandwidth: { audio: undefined, video: undefined },
+        bandwidth: { audio: null, video: null },
         video_size: { minWidth: 640, minHeight: 480, maxWidth: 1280, maxHeight: 720 },
         sip_headers: [{ name: "User-Agent", value: "IM-client/OMA1.0 sipML5-v1.2016.03.04" }, { name: "Organization", value: "VNPT-IT" }]
     });
@@ -243,7 +261,8 @@ function initializeWebRTC(localVideoId, remoteVideoId) {
         .withUrl("/chatHub")
         .build();
 
-    peerConnection = new RTCPeerConnection({
+    peerConnection = new RTCPeerConnection(
+    {
         iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
     });
 

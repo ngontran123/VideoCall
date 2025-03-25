@@ -110,8 +110,8 @@ if (navigator.mozGetUserMedia) {
         b.play()
     }
 } else {
-    if (navigator.webkitGetUserMedia) {
-        console.log("This appears to be Chrome");
+    if (navigator.webkitGetUserMedia || navigator.getUserMedia) {
+        console.log("This appears to be Chrome or Safari");
         webrtcDetectedBrowser = "chrome";
         var result = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
         if (result !== null) {
@@ -237,30 +237,41 @@ if (navigator.mozGetUserMedia) {
             }
             console.log("installPlugin() called");
             var c = !!((Object.getOwnPropertyDescriptor && Object.getOwnPropertyDescriptor(window, "ActiveXObject")) || ("ActiveXObject" in window));
+            
             var a = !!navigator.userAgent.indexOf("Safari");
+            // var a = false;
             var b = document.createElement("object");
-            if (c) {
+            
+            if (c) 
+            {
                 b.setAttribute("classid", "CLSID:7FD49E23-C8D7-4C4F-93A1-F7EACFA1EC53");
                 c = true
-            } else {
+            } 
+            else 
+            {
                 b.setAttribute("type", "application/webrtc-everywhere")
             }
             b.setAttribute("id", "WebrtcEverywherePluginId");
             document.body.appendChild(b);
             b.setAttribute("width", "0");
             b.setAttribute("height", "0");
-            if (b.isWebRtcPlugin || (typeof navigator.plugins !== "undefined" && (!!navigator.plugins["WebRTC Everywhere"] || navigator.plugins["WebRTC Everywhere Plug-in for Safari"]))) {
+            if (b.isWebRtcPlugin || (typeof navigator.plugins !== "undefined" && (!!navigator.plugins["WebRTC Everywhere"] || navigator.plugins["WebRTC Everywhere Plug-in for Safari"]))) 
+            {
                 console.log("Plugin version: " + b.versionName + ", adapter version: 1.3.1");
                 if (c) {
                     console.log("This appears to be Internet Explorer");
                     webrtcDetectedBrowser = "Internet Explorer"
-                } else {
-                    if (a) {
+                } else 
+                {
+                    if (a) 
+                    {
                         console.log("This appears to be Safari");
                         webrtcDetectedBrowser = "Safari"
                     } else {}
                 }
-            } else {
+            } 
+          else 
+            {
                 console.log("Browser does not appear to be WebRTC-capable")
             }
         };
