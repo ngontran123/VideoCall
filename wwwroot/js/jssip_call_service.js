@@ -171,22 +171,6 @@ ua.on('newRTCSession', (data) => {
         stopRingTone();
         status_value.innerHTML="Call is in accepted";
         console.log('Call accepted');
-
-        const pc = session.connection;
-
-        const localStream = pc.getLocalStreams()[0];
-        
-        if (localStream) 
-        {
-            localVideo.srcObject = localStream;
-        }
-
-        pc.onaddstream = (event) => 
-        {
-            document.getElementById("remoteVideo").srcObject = event.stream;
-            document.getElementById("remoteAudio").srcObject = event.stream;
-
-        };
     });
 
     session.on('failed', (data) => {
@@ -226,12 +210,13 @@ ua.on('newRTCSession', (data) => {
         {
             localVideo.srcObject = localStream;
         }
+        
         document.getElementById("remoteVideo").srcObject = remoteStream;
+        
         document.getElementById("remoteAudio").srcObject = remoteStream;
         
     });
 
-    // Handle media streams
     session.on('peerconnection', () => {
         
         const pc = session.connection;
@@ -334,8 +319,8 @@ function startSipCall()
 
     if (!ua.isRegistered()) 
     {
-        alert('Not registered with SIP server yet. Please wait.');
         status_value.innerHTML = 'SIP server not registered yet';
+        
         return;
     }
 
@@ -355,6 +340,7 @@ function startSipCall()
             ]
         }
       };
+      
       var session = ua.call(hotline, options);
 
       console.log('Call initeiated to hotline: '+hotline);
