@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "b6Xdc6UUfwV8h5ZksUErH6oSxlr/mQ4ek8jVbd7igk0=",
+  "Hash": "ylSmKOfGSupIwfiNeZF0mTPEXT31liqhc7PBKtZY+us=",
   "Source": "VideoChat",
   "BasePath": "_content/VideoChat",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "VideoChat\\wwwroot",
       "Source": "VideoChat",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\css\\style.css",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\css\\style.css",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "css/style.css",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot\\css\\style.css"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\google_sofiatube7.mp3",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\google_sofiatube7.mp3",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "google_sofiatube7.mp3",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\google_sofiatube7.mp3"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\index.html",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\index.html",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "index.html",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\index.html"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\call_service.js",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call_service.js",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "js/call_service.js",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\js\\call_service.js"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\call.js",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call.js",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "js/call.js",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\js\\call.js"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\jssip_call_service.js",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\jssip_call_service.js",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "js/jssip_call_service.js",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\js\\jssip_call_service.js"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\jssip.js",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\jssip.js",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "js/jssip.js",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\js\\jssip.js"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\mqtt.js",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\mqtt.js",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "js/mqtt.js",
       "AssetKind": "All",
@@ -169,10 +169,10 @@
       "OriginalItemSpec": "wwwroot\\js\\mqtt.js"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\paho-mqtt.js",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\paho-mqtt.js",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "js/paho-mqtt.js",
       "AssetKind": "All",
@@ -188,10 +188,10 @@
       "OriginalItemSpec": "wwwroot\\js\\paho-mqtt.js"
     },
     {
-      "Identity": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\sipml.js",
+      "Identity": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\sipml.js",
       "SourceId": "VideoChat",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\",
       "BasePath": "_content/VideoChat",
       "RelativePath": "js/sipml.js",
       "AssetKind": "All",

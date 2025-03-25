@@ -73,7 +73,9 @@ var socket = new JsSIP.WebSocketInterface(data_obj.websocket_server_url);
 var configuration = {
     sockets  : [ socket ],
     uri      : data_obj.impu,
-    password : data_obj.password
+    password : data_obj.password,
+    display_name: data_obj.display_name,
+    session_timers: false
   };
   
 
@@ -140,6 +142,8 @@ ua.on('newRTCSession', (data) => {
     if (session.direction === 'outgoing') {
         
         status_value.innerHTML = 'Outgoing call initiated';
+
+        startRingTone();
         
         console.log('Outgoing call initiated');
     } else {
@@ -164,29 +168,72 @@ ua.on('newRTCSession', (data) => {
     });
 
     session.on('accepted', () => {
+        stopRingTone();
         status_value.innerHTML="Call is in accepted";
         console.log('Call accepted');
+
+        const pc = session.connection;
+
+        const localStream = pc.getLocalStreams()[0];
+        
+        if (localStream) 
+        {
+            localVideo.srcObject = localStream;
+        }
+
+        pc.onaddstream = (event) => 
+        {
+            document.getElementById("remoteVideo").srcObject = event.stream;
+            document.getElementById("remoteAudio").srcObject = event.stream;
+
+        };
     });
 
     session.on('failed', (data) => {
         status_value.innerHTML="Call is failed";
-        console.error('Call failed:', data.cause);
+        console.error('Call failed:', data);
         currentSession = null;
     });
 
     session.on('ended', () => {
 
+        stopRingTone();
+
         status_value.innerHTML="Call Ended";
 
         console.log('Call ended');
+        
         currentSession = null;
+        
         hangupBtn.disabled = true;
+        
         localVideo.srcObject = null;
+        
         remoteVideo.srcObject = null;
+    });
+
+    session.on('confirmed', () => {
+
+        status_value.innerHTML="Call is confirmed";
+
+        const pc = session.connection;
+
+        const localStream = pc.getLocalStreams()[0];
+
+        const remoteStream = pc.getRemoteStreams()[0];
+        
+        if (localStream) 
+        {
+            localVideo.srcObject = localStream;
+        }
+        document.getElementById("remoteVideo").srcObject = remoteStream;
+        document.getElementById("remoteAudio").srcObject = remoteStream;
+        
     });
 
     // Handle media streams
     session.on('peerconnection', () => {
+        
         const pc = session.connection;
 
         const localStream = pc.getLocalStreams()[0];
@@ -202,6 +249,25 @@ ua.on('newRTCSession', (data) => {
     });
 });
 ua.start();
+}
+
+
+function startRingTone() {
+    try {
+        ringTone.play();
+    }
+    catch (e) {
+        console.log('Play ringtone exception:' + e);
+    }
+}
+
+function stopRingTone() {
+    try {
+        ringTone.pause();
+    }
+    catch (e) {
+        console.log('Stop playing ringtone', e);
+    }
 }
 
 
@@ -281,8 +347,6 @@ function startSipCall()
 
     var options = {
         'mediaConstraints': { audio: true, video: true },
-        'eventHandlers'    : eventHandlers,
-        'mediaConstraints' : { 'audio': true, 'video': true },
         'pcConfig':{
             'iceServers': 
             [
@@ -291,8 +355,9 @@ function startSipCall()
             ]
         }
       };
-      
       var session = ua.call(hotline, options);
+
+      console.log('Call initeiated to hotline: '+hotline);
 }
 
 function endCall()
