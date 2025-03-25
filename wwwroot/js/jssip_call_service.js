@@ -258,11 +258,14 @@ function stopRingTone() {
 
 function toggleCamera()
 {
-if(!callSession || !localStream)
+if(!currentSession)
 {
     status_value.innerHTML = 'No active call session';
     return;
 }
+
+var localStream = currentSession.connection.getLocalStreams()[0];
+
    var videoObj=localStream.getVideoTracks()[0];
 
    if(!videoObj)
@@ -274,15 +277,23 @@ if(!callSession || !localStream)
 
    videoObj.enabled = isCameraOn;
 
+   cameraBtn.classList.toggle('off', !isCameraOn);
+
+   cameraBtn.innerHTML = isCameraOn
+       ? '<i class="bi bi-camera-video-fill me-1"></i> Camera'
+       : '<i class="bi bi-camera-video-off-fill me-1"></i> Camera';
+
 }
 
 function toggleVoice()
 {
-if(!callSession || !localStream)
+if(!currentSession)
 {
     status_value.innerHTML = 'No active call session';
     return;
 }
+var localStream = currentSession.connection.getLocalStreams()[0];
+
  var audioObj = localStream.getAudioTracks()[0];
  
  if(!audioObj)
@@ -293,6 +304,12 @@ if(!callSession || !localStream)
  isVoiceOn = !isVoiceOn;
 
  audioObj.enabled = isVoiceOn;
+
+ voiceBtn.classList.toggle("off", !isVoiceOn);
+
+ voiceBtn.innerHTML = isVoiceOn
+     ? '<i class="bi bi-mic-fill me-1"></i> Voice'
+     : '<i class="bi bi-mic-mute-fill me-1"></i> Voice';
 }
 
 
@@ -351,6 +368,8 @@ function endCall()
     if(currentSession)
     {
         currentSession.terminate();
+
+        currentSession=null;
         
         status_value.innerHTML = 'Call Ended';
     }
