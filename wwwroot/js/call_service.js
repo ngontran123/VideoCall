@@ -158,16 +158,21 @@ async function initializeSipClient() {
 
 
     endCallBtn.disabled = false;
+    
     cameraBtn.disabled = false;
+    
     voiceBtn.disabled = false;
+    
     var entry_point = 'https://portal-ccbs.mobimart.xyz/api/get-data';
+    
     var data_hash = get_data;
+    
     var data =
     {
         'data': data_hash
     };
 
-    var response = await postData(entry_point, data)
+    var response = await postData(entry_point, data);
 
     var data = response.data;
 
@@ -182,11 +187,10 @@ async function initializeSipClient() {
     
     var data_obj = data.data;
 
-    SIPml.init(function() {
+    SIPml.init(function() 
+    {
 
         console.log("be ready to init");
-        var plugin = SIPml.getPlugin();
-        console.log("Plugin here is:",plugin);
         var config = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
         var pc = new RTCPeerConnection(config);
         console.log("PeerConnection:", pc);
@@ -202,8 +206,10 @@ async function initializeSipClient() {
         }
         else 
         {
-            console.log("Browser name:"+SIPml.getNavigatorFriendlyName());            
-            if (confirm("webrtc-everywhere extension is not installed. Do you want to install it?\nIMPORTANT: You must restart your browser after the installation.")) {
+            console.log("Browser name:"+SIPml.getNavigatorFriendlyName());
+                        
+            if (confirm("webrtc-everywhere extension is not installed. Do you want to install it?\nIMPORTANT: You must restart your browser after the installation.")) 
+            {
                 window.location = 'https://github.com/sarandogou/webrtc-everywhere';
             }
         }
@@ -212,8 +218,6 @@ async function initializeSipClient() {
     // SIPml.init(function(e){ console.info('engine is ready'); }, function(e){ console.info('Error: ' + e.message); });
 
     // SIPml.getNavigatorFriendlyName()
-
-
 
     sipStack = new SIPml.Stack({
         realm: data_obj.realm,
@@ -241,13 +245,14 @@ async function initializeSipClient() {
     }, 3000);
     {
         sipStack.start();
-        status_value.textContent = "SIP client initialized here";
+        status_value.textContent = "SIP client initialized here";        
     }
 }
 
 function onSipEventStack(e) {
     console.log("SIP Event:", e.type);
-    switch (e.type) {
+    switch (e.type) 
+    {
         case "started":
             status_value.textContent = "SIP client started";
             break;
@@ -261,7 +266,9 @@ function initializeWebRTC(localVideoId, remoteVideoId) {
         .withUrl("/chatHub")
         .build();
 
-    peerConnection = new RTCPeerConnection(
+
+    peerConnection = new RTCPeerConnection
+    (
     {
         iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
     });
@@ -278,20 +285,23 @@ function initializeWebRTC(localVideoId, remoteVideoId) {
 
     };
 
-    peerConnection.onicecandidate = (event) => {
+    peerConnection.onicecandidate = (event) => 
+    {
         if (event.candidate) {
             signalRConnection.invoke("SendIceCandidate", "vnpt-endpoint", JSON.stringify(event.candidate));
         }
     };
 
-    signalRConnection.on("ReceiveOffer", async (senderId, sdpOffer) => {
+    signalRConnection.on("ReceiveOffer", async (senderId, sdpOffer) => 
+    {
         await peerConnection.setRemoteDescription(JSON.parse(sdpOffer));
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
-        signalRConnection.invoke("SendAnswer", senderId, JSON.stringify(answer));
+        signalRConnection.invoke("SendAnswer", senderId, JSON.stringify(answer));        
     });
 
-    signalRConnection.on("ReceiveAnswer", async (senderId, sdpAnswer) => {
+    signalRConnection.on("ReceiveAnswer", async (senderId, sdpAnswer) => 
+    {
         await peerConnection.setRemoteDescription(JSON.parse(sdpAnswer));
     });
 
@@ -332,7 +342,8 @@ function stopRingTone() {
 }
 
 
-async function onSipEventSession(e) {
+async function onSipEventSession(e) 
+{
     console.log("SIP Event Session:", e.type);
     switch (e.type) {
 
@@ -379,7 +390,8 @@ async function onSipEventSession(e) {
         case "m_stream_audio_remote_added":
             console.log("Remote Audio Stream Added");
             const remoteAudioElement = document.getElementById("remoteAudio");
-            remoteAudioElement.play().catch(error => {
+            remoteAudioElement.play().catch(error => 
+            {
                 console.error('Error playing audio:', error);
             });
             console.log("Remote Audio Element:", remoteAudioElement);

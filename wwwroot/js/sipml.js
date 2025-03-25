@@ -7,20 +7,28 @@ var reattachMediaStream = null;
 var webrtcDetectedBrowser = null;
 var webrtcDetectedVersion = null;
 window.performance = window.performance || {};
+
 window.performance.now = window.performance.now || (function() {
-    var a = Date.now();
+
+var a = Date.now();
+    
     return function() {
         return Date.now() - a
     }
 })();
+
+
 window.URL = window.URL || window.webkitURL;
 
+
 function trace(a) {
-    if (a[a.length - 1] == "\n") {
+    if (a[a.length - 1] == "\n") 
+    {
         a = a.substring(0, a.length - 1)
     }
     console.log((performance.now() / 1000).toFixed(3) + ": " + a)
 }
+
 
 function maybeFixConfiguration(b) {
     if (!b) {
@@ -29,14 +37,15 @@ function maybeFixConfiguration(b) {
     for (var a = 0; a < b.iceServers.length; a++) {
         if (b.iceServers[a].hasOwnProperty("urls")) {
             b.iceServers[a]["url"] = b.iceServers[a]["urls"];
-            delete b.iceServers[a]["urls"]
+            delete b.iceServers[a]["urls"];
         }
     }
 }
 drawImage = function(c, e, b, f, d, a) {
     c.drawImage(e, b, f, d, a)
 };
-attachEventListener = function(c, b, d, a) {
+attachEventListener = function(c, b, d, a) 
+{
     c.addEventListener(b, d, a)
 };
 if (navigator.mozGetUserMedia) {
@@ -84,7 +93,8 @@ if (navigator.mozGetUserMedia) {
         var d = [];
         for (i = 0; i < c.length; i++) {
             var b = createIceServer(c[i], e, a);
-            if (b !== null) {
+            if (b !== null) 
+            {
                 d.push(b)
             }
         }
@@ -145,7 +155,8 @@ if (navigator.mozGetUserMedia) {
                     credential: a,
                     username: e
                 }
-            } else {
+            } else 
+            {
                 for (i = 0; i < c.length; i++) {
                     var b = createIceServer(c[i], e, a);
                     if (b !== null) {
@@ -155,14 +166,17 @@ if (navigator.mozGetUserMedia) {
             }
             return d
         };
-        var RTCPeerConnection = function(a, b) {
-            if (webrtcDetectedVersion < 34) {
+        var RTCPeerConnection = function(a, b) 
+        {
+            if (webrtcDetectedVersion < 34) 
+            {
                 maybeFixConfiguration(a)
             }
             return new webkitRTCPeerConnection(a, b)
         };
         getUserMedia = navigator.webkitGetUserMedia.bind(navigator);
         navigator.getUserMedia = getUserMedia;
+
         attachMediaStream = function(a, b) {
             if (typeof a.srcObject !== "undefined") {
                 a.srcObject = b
@@ -16676,7 +16690,8 @@ function tsip_transport(d, c, b, f, e, a) {
             this.__start = function() {
                 return __tsip_transport_webrtc4all_start(this)
             };
-            this.__stop = function() {
+            this.__stop = function() 
+            {
                 return __tsip_transport_webrtc4all_stop(this)
             };
             this.__have_socket = function(g) {
@@ -16795,7 +16810,8 @@ tsip_transport.prototype.signal = function(b, c, d) {
     }
     return 0
 };
-tsip_transport.prototype.message_addvia = function(b, a) {
+tsip_transport.prototype.message_addvia = function(b, a) 
+{
     if (!a.o_hdr_firstVia) {
         a.o_hdr_firstVia = new tsip_header_Via(tsip_header_Via.prototype.__s_proto_name_default, tsip_header_Via.prototype.__s_proto_version_default, this.s_via_protocol, this.get_local_ip(), this.get_local_port());
         a.o_hdr_firstVia.add_param("rport", null)
@@ -16807,7 +16823,8 @@ tsip_transport.prototype.message_addvia = function(b, a) {
     }
     return 0
 };
-tsip_transport.prototype.message_update_aor = function(a) {
+tsip_transport.prototype.message_update_aor = function(a) 
+{
     if (!a.b_update) {
         return 0
     }
@@ -17081,7 +17098,8 @@ tsip_transport_layer.prototype.transport_find = function(b) {
     } else {
         if (b.o_hdr_firstVia) {
             if (b.o_hdr_firstVia.is_transport_reliable()) {} else {
-                if (b.o_hdr_firstVia.s_maddr) {} else {
+                if (b.o_hdr_firstVia.s_maddr) {} else 
+                {
                     if (b.o_hdr_firstVia.s_received) {
                         if (b.o_hdr_firstVia.i_rport > 0) {
                             c.s_dest_ip = b.o_hdr_firstVia.s_received;
@@ -17148,7 +17166,8 @@ SIPml.b_webrtc_supported = false;
 SIPml.setDebugLevel = function(a) {
     tsk_utils_log_set_level(a === "fatal" ? 1 : (a === "error" ? 2 : (a === "warn" ? 3 : 4)))
 };
-SIPml.startNativeDebug = function() {
+SIPml.startNativeDebug = function() 
+{
     WebRtc4all_GetPlugin().startDebug()
 };
 SIPml.stopNativeDebug = function() {
@@ -17269,7 +17288,8 @@ SIPml.isWebRtcSupported = function() {
     }
     return SIPml.b_webrtc_supported
 };
-SIPml.isWebSocketSupported = function() {
+SIPml.isWebSocketSupported = function() 
+{
     return tsk_utils_have_websocket()
 };
 SIPml.haveMediaStream = function() {
@@ -17582,7 +17602,8 @@ SIPml.Stack = function(a) {
         var f = null;
         var g = j.o_session.i_id;
         var h = j.o_session.o_stack.oStack.ao_sessions[g];
-        if (!h) {
+        if (!h) 
+        {
             tsk_utils_log_warn("Cannot find session with id = " + g + " and event = " + j.e_invite_type);
             return
         }

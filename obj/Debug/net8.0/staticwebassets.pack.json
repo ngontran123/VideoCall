@@ -13,16 +13,20 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\SIPml-api.js",
-      "PackagePath": "staticwebassets\\js\\SIPml-api.js"
-    },
-    {
       "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\call.js",
       "PackagePath": "staticwebassets\\js\\call.js"
     },
     {
       "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\call_service.js",
       "PackagePath": "staticwebassets\\js\\call_service.js"
+    },
+    {
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\jssip.js",
+      "PackagePath": "staticwebassets\\js\\jssip.js"
+    },
+    {
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\jssip_call_service.js",
+      "PackagePath": "staticwebassets\\js\\jssip_call_service.js"
     },
     {
       "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\mqtt.js",
