@@ -169,8 +169,8 @@ ua.on('newRTCSession', (data) => {
 
     session.on('accepted', () => {
         stopRingTone();
-        status_value.innerHTML="Call is in accepted";
-        console.log('Call accepted');
+        status_value.innerHTML="Call is accepted";
+        console.log('Call accepted');        
     });
 
     session.on('failed', (data) => {
@@ -188,15 +188,14 @@ ua.on('newRTCSession', (data) => {
         console.log('Call ended');
         
         currentSession = null;
-        
-        hangupBtn.disabled = true;
-        
+                
         localVideo.srcObject = null;
         
         remoteVideo.srcObject = null;
     });
 
-    session.on('confirmed', () => {
+    session.on('confirmed', () => 
+    {
 
         status_value.innerHTML="Call is confirmed";
 
@@ -213,8 +212,8 @@ ua.on('newRTCSession', (data) => {
         
         document.getElementById("remoteVideo").srcObject = remoteStream;
         
-        document.getElementById("remoteAudio").srcObject = remoteStream;
-        
+        document.getElementById("remoteAudio").srcObject = remoteStream;        
+    
     });
 
     session.on('peerconnection', () => {
