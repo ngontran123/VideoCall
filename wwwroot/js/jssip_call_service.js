@@ -261,6 +261,7 @@ function toggleCamera()
 if(!currentSession)
 {
     status_value.innerHTML = 'No active call session';
+    
     return;
 }
 
@@ -271,6 +272,7 @@ var localStream = currentSession.connection.getLocalStreams()[0];
    if(!videoObj)
    {
     status_value.innerHTML = 'No video track found';
+    return;
    }
 
    isCameraOn = !isCameraOn;
@@ -290,15 +292,19 @@ function toggleVoice()
 if(!currentSession)
 {
     status_value.innerHTML = 'No active call session';
+    
     return;
 }
+
 var localStream = currentSession.connection.getLocalStreams()[0];
 
- var audioObj = localStream.getAudioTracks()[0];
+var audioObj = localStream.getAudioTracks()[0];
  
  if(!audioObj)
  {
     status_value.innerHTML = 'No audio track found';
+    
+    return;
  }
  
  isVoiceOn = !isVoiceOn;
@@ -313,23 +319,22 @@ var localStream = currentSession.connection.getLocalStreams()[0];
 }
 
 
-// Register callbacks to desired call events
-var eventHandlers = {
-  'progress': function(e) 
-  {
-    console.log('call is in progress');
-  },
-  'failed': function(e) {
-    console.log('call failed with cause: '+ e.data.cause);
-  },
-  'ended': function(e) {
-    console.log('call ended with cause: '+ e.data.cause);
-  },
-  'confirmed': function(e) 
-  {
-    console.log('call confirmed');
-  }
-};
+// var eventHandlers = {
+//   'progress': function(e) 
+//   {
+//     console.log('call is in progress');
+//   },
+//   'failed': function(e) {
+//     console.log('call failed with cause: '+ e.data.cause);
+//   },
+//   'ended': function(e) {
+//     console.log('call ended with cause: '+ e.data.cause);
+//   },
+//   'confirmed': function(e) 
+//   {
+//     console.log('call confirmed');
+//   }
+// };
 
 function startSipCall()
 {
@@ -360,7 +365,7 @@ function startSipCall()
       
       var session = ua.call(hotline, options);
 
-      console.log('Call initeiated to hotline: '+hotline);
+      console.log('Call initiated to hotline: '+hotline);
 }
 
 function endCall()
