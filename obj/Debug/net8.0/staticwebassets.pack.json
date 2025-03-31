@@ -1,43 +1,55 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\css\\style.css",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\css\\style.css",
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\google_sofiatube7.mp3",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\google_sofiatube7.mp3",
       "PackagePath": "staticwebassets\\google_sofiatube7.mp3"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\index.html",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\call.js",
       "PackagePath": "staticwebassets\\js\\call.js"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\call_service.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\call_service.js",
       "PackagePath": "staticwebassets\\js\\call_service.js"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\jssip.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\jssip.js",
       "PackagePath": "staticwebassets\\js\\jssip.js"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\jssip_call_service.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\jssip_call_service.js",
       "PackagePath": "staticwebassets\\js\\jssip_call_service.js"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\mqtt.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\mqtt.js",
       "PackagePath": "staticwebassets\\js\\mqtt.js"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\paho-mqtt.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\original_jsip.js",
+      "PackagePath": "staticwebassets\\js\\original_jsip.js"
+    },
+    {
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\original_jsip_service.js",
+      "PackagePath": "staticwebassets\\js\\original_jsip_service.js"
+    },
+    {
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\original_mqtt.js",
+      "PackagePath": "staticwebassets\\js\\original_mqtt.js"
+    },
+    {
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\paho-mqtt.js",
       "PackagePath": "staticwebassets\\js\\paho-mqtt.js"
     },
     {
-      "Id": "C:\\Users\\Quan\\Downloads\\VideoCall\\VideoCall\\wwwroot\\js\\sipml.js",
+      "Id": "C:\\Users\\QuanDEV\\VideoChat\\wwwroot\\js\\sipml.js",
       "PackagePath": "staticwebassets\\js\\sipml.js"
     },
     {

@@ -126,3 +126,5 @@ C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\publish\VideoChat.deps.json
 C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\publish\VideoChat.runtimeconfig.json
 C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\VideoChat.deps.json
 C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\publish\VideoChat.runtimeconfig.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\package-lock.json
+C:\Users\QuanDEV\VideoChat\bin\Debug\net8.0\package.json
