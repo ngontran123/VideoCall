@@ -39,8 +39,6 @@ let isVoiceOn = true;
 
 let hotline = '';
 
-
-
 function toggleCamera() {
     // const videoTrack = localStream.getVideoTracks()[0];
     console.log('In this toggle camera');
@@ -50,7 +48,8 @@ function toggleCamera() {
     //         return;
     //     }
 
-    if (!callSession) {
+    if (!callSession) 
+    {
         status_value.textContent = "No active call to toggle camera.";
 
         return;
@@ -68,7 +67,8 @@ function toggleCamera() {
 
 
 
-    if (callSession) {
+    if (callSession) 
+    {
         localStream = callSession.o_session.o_stream_local;
         videoTrack = localStream.getVideoTracks();
         if (videoTrack.length > 0) {
@@ -78,7 +78,6 @@ function toggleCamera() {
             });
         }
     }
-
 
     videoTrack.enabled = isCameraOn;
 
@@ -90,7 +89,8 @@ function toggleCamera() {
     status_value.textContent = `Camera ${isCameraOn ? "on" : "off"}`;
 }
 
-function toggleVoice() {
+function toggleVoice() 
+{
 
     // if(!callSession)
     // {
